@@ -1,13 +1,28 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
+@font-face {
+    font-family: NBOLD;
+    src: url(./assets/fonts/NBold.otf);
+  }
+  @font-face {
+    font-family: NMedium;
+    src: url(./assets/fonts/NMedium.otf);
+  }
+  @font-face {
+    font-family: NRegular;
+    src: url(./assets/fonts/NRegular.otf);
+  }
+  @font-face {
+    font-family: NLight;
+    src: url(./assets/fonts/NLight.otf);
+  }
+        
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+
+body{
+    margin: 0;
+    font-family: "NRegular";
+    background-color: #141414;
+}
+#source{
+  opacity: .4 !important;
 }
