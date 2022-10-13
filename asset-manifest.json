@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/bigFlix/static/css/main.7666af7b.css",
-    "main.js": "/bigFlix/static/js/main.e749629d.js",
+    "main.js": "/bigFlix/static/js/main.6588d5f2.js",
     "static/media/bg.jpg": "/bigFlix/static/media/bg.64c7fdeae652d6a97dad.jpg",
     "static/media/NBold.otf": "/bigFlix/static/media/NBold.f61f7a737cfe2b1350b3.otf",
     "static/media/NMedium.otf": "/bigFlix/static/media/NMedium.afa70b1616563bbc985d.otf",
@@ -9,10 +9,10 @@
     "static/media/NLight.otf": "/bigFlix/static/media/NLight.94a8f7dbe7e126ebe18a.otf",
     "index.html": "/bigFlix/index.html",
     "main.7666af7b.css.map": "/bigFlix/static/css/main.7666af7b.css.map",
-    "main.e749629d.js.map": "/bigFlix/static/js/main.e749629d.js.map"
+    "main.6588d5f2.js.map": "/bigFlix/static/js/main.6588d5f2.js.map"
   },
   "entrypoints": [
     "static/css/main.7666af7b.css",
-    "static/js/main.e749629d.js"
+    "static/js/main.6588d5f2.js"
   ]
 }
