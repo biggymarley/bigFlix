@@ -1,7 +1,6 @@
 {
   "name": "bigflix",
   "version": "0.1.0",
-  "homepage": "https://biggymarley.github.io/bigFlix",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.4",
