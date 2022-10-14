@@ -16,7 +16,7 @@ export default function Slider({ mode }) {
     <Splide
       options={{
         type: "slide",
-        padding: { left: "90px", right: "90px" },
+        padding: { left: "5vw", right: "5vw" },
         trimSpace: true,
         perPage: 5,
         focus: 0,
@@ -27,6 +27,20 @@ export default function Slider({ mode }) {
         rewind: false,
         lazyLoad: true,
         omitEnd: false,
+        breakpoints: {
+          1336: {
+            perPage: 4,
+          },
+          1200: {
+            perPage: 3,
+          },
+          900: {
+            perPage: 2,
+          },
+          650: {
+            perPage: 1,
+          },
+        },
       }}
     >
       {movies.length > 0

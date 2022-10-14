@@ -27,7 +27,7 @@ body {
 .splide__arrow {
   height: 100%;
   background-color: #14141492;
-  width: 90px;
+  width: 5vw;
   outline: 0;
 }
 .splide__arrow--next {

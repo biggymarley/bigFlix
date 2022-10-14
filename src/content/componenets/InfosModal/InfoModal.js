@@ -70,7 +70,7 @@ const InfoLayer = ({ trailer, movie }) => {
       <Box sx={{ width: "calc(100%)", height: "80vw", position: "relative" }}>
         {trailer ? (
           <iframe
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none", position: "relative", top: "-25%" }}
             title="movieframe"
             frameBorder={0}
             width="100%"
@@ -96,7 +96,7 @@ const InfoLayer = ({ trailer, movie }) => {
             background: "linear-gradient(transparent 0% , #141414 80%)",
             zIndex: 2,
             position: "absolute",
-            bottom: 0,
+            bottom: "25%",
             width: "100%",
           }}
         />
@@ -106,7 +106,7 @@ const InfoLayer = ({ trailer, movie }) => {
         <Stack
           direction={"column"}
           spacing={2}
-          sx={{ position: "absolute", top: "55%", left: "5%" }}
+          sx={{ position: "absolute", top: "30%", left: "5%" }}
         >
           <Stack sx={{ zIndex: 4 }}>
             <Stack direction={"row"} alignItems="center" spacing={0.5}>
@@ -116,6 +116,7 @@ const InfoLayer = ({ trailer, movie }) => {
                   textTransform: "capitalize",
                   color: "primary.main",
                   fontSize: "clamp(16px, 4vw, 2rem)",
+                  whiteSpace:"nowrap"
                 }}
                 variant="h1"
               >
@@ -153,6 +154,7 @@ const InfoLayer = ({ trailer, movie }) => {
             position: "relative",
             bottom: "10%",
             zIndex: 2,
+            top: "-47%",
           }}
           spacing={2}
         >
@@ -248,7 +250,7 @@ const classes = {
     display: { xs: "none", md: "flex" },
     zIndex: 99,
     position: "absolute",
-    top: "75%",
+    top: "52%",
     px: "5%",
   },
   title: {

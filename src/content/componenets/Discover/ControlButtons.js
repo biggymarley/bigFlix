@@ -14,7 +14,7 @@ export const ControlButtons = ({ nowPlayingMovie }) => {
     <Stack
       sx={{
         position: "absolute",
-        top: { xs: "80%", md: "70%" },
+        top: { xs: "50%", md: "70%" },
         left: { xs: "50%", md: "5%" },
         transform: { xs: "translate(-50%, 0)", md: "translate(0, 0)" },
       }}
