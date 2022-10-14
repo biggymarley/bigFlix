@@ -1,5 +1,5 @@
-import { PlayArrowRounded } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { ArrowBack, Close, PlayArrowRounded } from "@mui/icons-material";
+import { Button, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -68,6 +68,12 @@ const InfoLayer = ({ trailer, movie }) => {
       }}
     >
       <Box sx={{ width: "calc(100%)", height: "80vw", position: "relative" }}>
+        <IconButton
+          sx={{ position: "absolute", top: 0, zIndex: 99, right: 0 }}
+          onClick={() => setInfoMovie(null)}
+        >
+          <Close sx={{ color: "primary.main" }} />
+        </IconButton>
         {trailer ? (
           <iframe
             style={{ pointerEvents: "none", position: "relative", top: "-25%" }}
@@ -116,7 +122,7 @@ const InfoLayer = ({ trailer, movie }) => {
                   textTransform: "capitalize",
                   color: "primary.main",
                   fontSize: "clamp(16px, 4vw, 2rem)",
-                  whiteSpace:"nowrap"
+                  whiteSpace: "nowrap",
                 }}
                 variant="h1"
               >
