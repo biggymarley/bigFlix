@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/bigFlix/static/css/main.3c1f2c1c.css",
-    "main.js": "/bigFlix/static/js/main.ca64df9a.js",
-    "static/media/bg.jpg": "/bigFlix/static/media/bg.64c7fdeae652d6a97dad.jpg",
-    "static/media/NBold.otf": "/bigFlix/static/media/NBold.f61f7a737cfe2b1350b3.otf",
-    "static/media/NMedium.otf": "/bigFlix/static/media/NMedium.afa70b1616563bbc985d.otf",
-    "static/media/NRegular.otf": "/bigFlix/static/media/NRegular.34b07abc629b899d2ec0.otf",
-    "static/media/NLight.otf": "/bigFlix/static/media/NLight.94a8f7dbe7e126ebe18a.otf",
-    "index.html": "/bigFlix/index.html",
-    "main.3c1f2c1c.css.map": "/bigFlix/static/css/main.3c1f2c1c.css.map",
-    "main.ca64df9a.js.map": "/bigFlix/static/js/main.ca64df9a.js.map"
+    "main.css": "/static/css/main.a81630f7.css",
+    "main.js": "/static/js/main.9594bac8.js",
+    "static/media/bg.jpg": "/static/media/bg.64c7fdeae652d6a97dad.jpg",
+    "static/media/NBold.otf": "/static/media/NBold.f61f7a737cfe2b1350b3.otf",
+    "static/media/NMedium.otf": "/static/media/NMedium.afa70b1616563bbc985d.otf",
+    "static/media/NRegular.otf": "/static/media/NRegular.34b07abc629b899d2ec0.otf",
+    "static/media/NLight.otf": "/static/media/NLight.94a8f7dbe7e126ebe18a.otf",
+    "index.html": "/index.html",
+    "main.a81630f7.css.map": "/static/css/main.a81630f7.css.map",
+    "main.9594bac8.js.map": "/static/js/main.9594bac8.js.map"
   },
   "entrypoints": [
-    "static/css/main.3c1f2c1c.css",
-    "static/js/main.ca64df9a.js"
+    "static/css/main.a81630f7.css",
+    "static/js/main.9594bac8.js"
   ]
 }
