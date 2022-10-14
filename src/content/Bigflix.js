@@ -1,20 +1,41 @@
 import { ThemeProvider } from "@mui/material";
-import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import { MoviesContext } from "../content/context/context";
-import useMoviesHook from "../content/hooks/useMoviesHook";
+import React, { useState } from "react";
+import { HashRouter } from "react-router-dom";
+import {
+  MoviesContext,
+  SearchContext,
+  StatusContext,
+} from "../content/context/context";
 import { theme } from "../content/styling/theme";
+import InfoModal from "./componenets/InfosModal/InfoModal";
+import StatusComponent from "./componenets/StatusComponent/StatusComponent";
+import useGenresHook from "./hooks/useGenresHook";
+import useSearchHook from "./hooks/useSearchHook";
+import useStatusHook from "./hooks/useStatusHook";
 import MainRouter from "./routes/MainRouter";
 function App() {
-  const { movies, fetchMovies, SearchAll } = useMoviesHook();
+  const { moviesGenres, seriesGenres } = useGenresHook();
+  const [uiState, dispatch] = useStatusHook();
+  const { query, HandleSearchChange, clearSearchChange } = useSearchHook();
+  const [InfosMovie, setInfoMovie] = useState(null);
   return (
-    <BrowserRouter>
+    <HashRouter>
       <ThemeProvider theme={theme}>
-        <MoviesContext.Provider value={{ movies, fetchMovies, SearchAll }}>
-          <MainRouter />
-        </MoviesContext.Provider>
+        <SearchContext.Provider
+          value={{ HandleSearchChange, query, clearSearchChange }}
+        >
+          <StatusContext.Provider value={{ uiState, dispatch }}>
+            <MoviesContext.Provider
+              value={{ moviesGenres, seriesGenres, setInfoMovie, InfosMovie }}
+            >
+              <StatusComponent />
+              <InfoModal />
+              <MainRouter />
+            </MoviesContext.Provider>
+          </StatusContext.Provider>
+        </SearchContext.Provider>
       </ThemeProvider>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

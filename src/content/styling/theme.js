@@ -14,5 +14,8 @@ export const theme = createTheme({
       main: "#000000",
       contrastText: "#FFFFFF",
     },
+    bg: {
+      main: "#141414",
+    },
   },
 });

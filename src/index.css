@@ -1,28 +1,63 @@
 @font-face {
-    font-family: NBOLD;
-    src: url(./assets/fonts/NBold.otf);
-  }
-  @font-face {
-    font-family: NMedium;
-    src: url(./assets/fonts/NMedium.otf);
-  }
-  @font-face {
-    font-family: NRegular;
-    src: url(./assets/fonts/NRegular.otf);
-  }
-  @font-face {
-    font-family: NLight;
-    src: url(./assets/fonts/NLight.otf);
-  }
-        
-
-
-
-body{
-    margin: 0;
-    font-family: "NRegular";
-    background-color: #141414;
+  font-family: NBOLD;
+  src: url(./assets/fonts/NBold.otf);
 }
-#source{
-  opacity: .4 !important;
+@font-face {
+  font-family: NMedium;
+  src: url(./assets/fonts/NMedium.otf);
+}
+@font-face {
+  font-family: NRegular;
+  src: url(./assets/fonts/NRegular.otf);
+}
+@font-face {
+  font-family: NLight;
+  src: url(./assets/fonts/NLight.otf);
+}
+
+body {
+  margin: 0;
+  font-family: "NRegular";
+  background-color: #141414;
+}
+#top_buttons {
+  opacity: 0 !important;
+}
+
+.splide__arrow {
+  height: 100%;
+  background-color: #14141492;
+  width: 90px;
+  outline: 0;
+}
+.splide__arrow--next {
+  right: 0;
+  border-radius: 8px 0px 0px 8px;
+
+}
+
+.splide__arrow--prev {
+  left: 0;
+  border-radius: 0px 8px 8px 0px;
+
+}
+
+.splide__arrow svg{
+  fill:#ffffffab
+}
+
+.splide__arrow:hover:not(:disabled) svg{
+  fill:#ffffff
+}
+
+
+
+#infomodal::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+#infomodal {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
 }

@@ -1,8 +1,9 @@
+import { SeriesGenresApi } from "../../config/apis";
 import { axiosMovies } from "../../config/axiosConfig";
 
-export const GetMoviesList = async (pageNumber, api) => {
+export const getSeriesGenres = async () => {
   try {
-    const movies = await axiosMovies.get(api);
+    const movies = await axiosMovies.get(SeriesGenresApi);
     return movies?.data ?? [];
   } catch (error) {
     console.error(error);

@@ -2,8 +2,7 @@ import { Info } from "@mui/icons-material";
 import { Grid, IconButton, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import bg from '../../../assets/imgs/bg.jpg';
+import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
 
 export default function PersonCard({ movie }) {
@@ -16,7 +15,7 @@ export default function PersonCard({ movie }) {
       sm={4}
       md={3}
       lg={2.4}
-      sx={{ display: "flex" }}
+      sx={{ display: "flex", cursor: "pointer" }}
       onMouseEnter={() => sethovred(true)}
       onMouseLeave={() => sethovred(false)}
     >
@@ -27,11 +26,11 @@ export default function PersonCard({ movie }) {
           height: "100%",
           zIndex: 0,
           transition: "all .5s ease",
-          ...(hovred && { transform: "scale(1.08)",   zIndex: 99, }),
-        
+          ...(hovred && { transform: "scale(1.08)", zIndex: 99 }),
         }}
       >
         <img
+          alt=""
           src={
             movie?.profile_path ? `${ImagesBaseUrl}${movie?.profile_path}` : bg
           }
@@ -52,7 +51,6 @@ export default function PersonCard({ movie }) {
 }
 
 const InfoLayer = ({ movie }) => {
-  const navigate = useNavigate();
 
   return (
     <Stack
@@ -68,7 +66,10 @@ const InfoLayer = ({ movie }) => {
     >
       <Box sx={{ width: "calc(100% - 2px)", height: "40%" }}>
         <img
-          src={`${ImagesBaseUrl}${movie?.profile_path}`}
+          alt=""
+          src={
+            movie?.profile_path ? `${ImagesBaseUrl}${movie?.profile_path}` : bg
+          }
           style={{ width: "100%", height: "100%", objectFit: "cover" }}
         />
       </Box>

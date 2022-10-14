@@ -1,10 +1,9 @@
-import { Container, Grid, Toolbar, Typography } from "@mui/material";
-import React, { useContext, useEffect, useState } from "react";
+import { Container, Grid, Toolbar } from "@mui/material";
+import React, { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
-import { MoviesContext } from "../../context/context";
 import useMoviesHook from "../../hooks/useMoviesHook";
+import Nodatafound from "../../styledComponents/Nodatafound";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
-import Card from "./Card";
 import MovieCard from "./MovieCard";
 import PersonCard from "./PersonCard";
 import SeriesCard from "./SeriesCard";
@@ -27,7 +26,7 @@ export default function SearchListScreen() {
       {movies.length > 0 ? (
         <CardsMap movies={movies} />
       ) : (
-        <Typography>Not found</Typography>
+        <Nodatafound/>
       )}
 
       <Routes>
@@ -48,7 +47,7 @@ const CardsMap = ({ movies }) => {
   );
 };
 
-const Switcher = ({ type, movie }) => {
+export const Switcher = ({ type, movie }) => {
   switch (type) {
     case "person":
       return <PersonCard movie={movie} />;

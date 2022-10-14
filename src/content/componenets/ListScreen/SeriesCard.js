@@ -3,22 +3,15 @@ import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import bg from '../../../assets/imgs/bg.jpg';
+import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
-import { getTrailerData } from "../../apisConnections/getTrailerData";
+import useTrailerHook from "../../hooks/useTrailerHook";
 export default function SeriesCard({ movie }) {
-  const [trailer, setTrailer] = useState(null);
   const [hovred, sethovred] = useState(false);
-
-  const getTrailer = async () => {
-    const trailerData = await getTrailerData(movie.id);
-    if (trailerData?.length > 0)
-      setTrailer(trailerData.filter((e) => e.type === "Trailer")[0]?.key);
-    else setTrailer(null);
-  };
+  const { trailer, getTrailer } = useTrailerHook();
   useEffect(() => {
-    getTrailer();
-  }, []);
+    getTrailer(movie.id);
+  }, [getTrailer, movie.id]);
 
   return (
     <Grid
@@ -27,7 +20,7 @@ export default function SeriesCard({ movie }) {
       sm={4}
       md={3}
       lg={2.4}
-      sx={{ display: "flex" }}
+      sx={{ display: "flex", cursor: "pointer" }}
       onMouseEnter={() => sethovred(true)}
       onMouseLeave={() => sethovred(false)}
     >
@@ -38,11 +31,16 @@ export default function SeriesCard({ movie }) {
           height: "100%",
           zIndex: 0,
           transition: "all .5s ease",
-          ...(hovred && { transform: "scale(1.08)" ,  zIndex: 99,}),
+          ...(hovred && { transform: "scale(1.08)", zIndex: 99 }),
         }}
       >
         <img
-          src={movie?.poster_path || movie?.backdrop_path ? `${ImagesBaseUrl}${movie?.poster_path || movie?.backdrop_path}` : bg}
+          alt=""
+          src={
+            movie?.poster_path || movie?.backdrop_path
+              ? `${ImagesBaseUrl}${movie?.poster_path || movie?.backdrop_path}`
+              : bg
+          }
           style={classes.poster}
         />
         <Box
@@ -77,24 +75,50 @@ const InfoLayer = ({ trailer, movie }) => {
         backdropFilter: "blur(2px)",
       }}
     >
-      {trailer ? (
-        <Box sx={{ width: "calc(100% - 2px)", height: "40%" }}>
+      <Box
+        sx={{
+          width: "calc(100% - 2px)",
+          height: "40%",
+          position: "absolute",
+          top: 0,
+          bottom: "40%",
+          zIndex: -1,
+        }}
+      >
+        <img
+          alt=""
+          src={
+            movie?.backdrop_path || movie?.poster_path
+              ? `${ImagesBaseUrl}${movie?.backdrop_path || movie?.poster_path}`
+              : bg
+          }
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </Box>
+      <Box sx={{ width: "calc(100%)", height: "40%" }}>
+        {trailer ? (
           <iframe
+          style={{ pointerEvents: "none" }}
+            title="serieframe"
             width="100%"
+            frameBorder={0}
             height="100%"
-            src={`https://www.youtube.com/embed/${trailer}?controls=0&autoplay=1`}
+            src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
           ></iframe>
-        </Box>
-      ) : (
-        <Box sx={{ width: "calc(100% - 2px)", height: "40%" }}>
+        ) : (
           <img
-            src={`${ImagesBaseUrl}${
+            alt=""
+            src={
               movie?.backdrop_path || movie?.poster_path
-            }`}
+                ? `${ImagesBaseUrl}${
+                    movie?.backdrop_path || movie?.poster_path
+                  }`
+                : bg
+            }
             style={{ width: "100%", height: "100%", objectFit: "cover" }}
           />
-        </Box>
-      )}
+        )}
+      </Box>
       <Stack height={"50%"} sx={classes.infoStack} spacing={2}>
         <TextInfos movie={movie} />
         <Stack
@@ -153,26 +177,26 @@ const TextInfos = ({ movie }) => {
 };
 
 const classes = {
-    poster: {
-      width: "100%",
-      objectFit: "cover",
-      height: "100%",
-    },
-    infoStack: {
-      // flexGrow:1,
-      p: 2,
-    },
-    title: {
-      color: "primary.main",
-      fontFamily: "NBOLD",
-    },
-    desc: {
-      color: "primary.main",
-      fontFamily: "NLight",
-      fontSize:"70%"
-    },
-    button: {
-      px: 4,
-      fontFamily: "NBOLD",
-    },
-  };
+  poster: {
+    width: "100%",
+    objectFit: "cover",
+    height: "100%",
+  },
+  infoStack: {
+    // flexGrow:1,
+    p: 2,
+  },
+  title: {
+    color: "primary.main",
+    fontFamily: "NBOLD",
+  },
+  desc: {
+    color: "primary.main",
+    fontFamily: "NLight",
+    fontSize: "70%",
+  },
+  button: {
+    px: 4,
+    fontFamily: "NBOLD",
+  },
+};

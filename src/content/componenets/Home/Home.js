@@ -1,17 +1,20 @@
 import { Button, Container, Stack, Toolbar, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../../../assets/imgs/bg.jpg";
 import Logo from "../../../assets/imgs/logo";
+import { SearchContext, StatusContext } from "../../context/context";
 import { StyledTextField } from "../../styledComponents/StyledTextField";
 import { theme } from "../../styling/theme";
 
 export default function Home() {
-  const [query, setQuery] = useState("");
+  const { dispatch } = useContext(StatusContext);
+  const { query, HandleSearchChange } = useContext(SearchContext);
   const [error, setError] = useState("");
   const navigate = useNavigate();
-  const HandleChange = (event) => {
-    setQuery(event.target.value);
+
+  const EnterListner = (event) => {
+    if (event.key === "Enter") SearchQuery();
   };
 
   const SearchQuery = () => {
@@ -21,11 +24,19 @@ export default function Home() {
       setError("");
     }
   };
+
+  const discover = () => {
+    dispatch({ type: "showLoading", payload: true });
+    setTimeout(() => {
+      navigate("/discover");
+    }, 1000);
+  };
+
   return (
     <Container maxWidth={"xl"} sx={classes.root}>
       <Toolbar>
         <Stack direction={"row"} py={4} px={2}>
-          <Logo color={theme.palette.secondary.main} width={160}  />
+          <Logo color={theme.palette.secondary.main} width={160} />
         </Stack>
       </Toolbar>
       <Stack
@@ -58,7 +69,8 @@ export default function Home() {
           <StyledTextField
             label="Search"
             variant="standard"
-            onChange={HandleChange}
+            onChange={HandleSearchChange}
+            onKeyDown={EnterListner}
             value={query}
           />
           <Button
@@ -79,6 +91,7 @@ export default function Home() {
         <Button
           color="secondary"
           variant="outlined"
+          onClick={discover}
           sx={{ ...classes.button, mt: 5 }}
         >
           Discover

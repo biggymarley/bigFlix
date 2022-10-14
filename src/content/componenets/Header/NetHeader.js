@@ -12,19 +12,19 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/system";
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/imgs/logo";
+import { SearchContext } from "../../context/context";
 import { theme } from "../../styling/theme";
 
 const pages = ["Home", "TV Shows", "Movies"];
 
 const NetHeader = () => {
-  const [queryField, setquery] = React.useState("");
+  const { query, HandleSearchChange, clearSearchChange } =
+    React.useContext(SearchContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
-  React.useEffect(() => {
-    setquery(localStorage.getItem("query") || "");
-  }, []);
+  let match = useMatch("/discover");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -36,7 +36,11 @@ const NetHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" sx={classes.appbar} elevation={0}>
+      <AppBar
+        position="fixed"
+        sx={{ ...classes.appbar, ...(match && { background: "#000000" }) }}
+        elevation={0}
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: { xs: 1, md: 0 }, paddingRight: 4 }}>
@@ -45,7 +49,6 @@ const NetHeader = () => {
               </Box>
             </Box>
 
-            
             <Stack
               sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}
               spacing={2}
@@ -71,8 +74,8 @@ const NetHeader = () => {
             <Box sx={{ overflow: "hidden" }}>
               <TextField
                 id="search"
-                value={queryField}
-                onChange={(e) => setquery(e.target.value)}
+                value={query}
+                onChange={HandleSearchChange}
                 variant="outlined"
                 size="small"
                 focused
@@ -85,10 +88,10 @@ const NetHeader = () => {
                       <Search sx={{ color: "primary.main" }} />
                     </InputAdornment>
                   ),
-                  endAdornment: (
-                    <IconButton position="start" onClick={(e) => setquery("")}>
+                  endAdornment: (query !== "" ? 
+                    <IconButton position="start" onClick={clearSearchChange}>
                       <Cancel sx={{ color: "primary.main" }} />
-                    </IconButton>
+                    </IconButton> : null
                   ),
                 }}
               />
@@ -147,7 +150,7 @@ const NetHeader = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      <Toolbar />
+      {match ? null : <Toolbar />}
     </>
   );
 };
