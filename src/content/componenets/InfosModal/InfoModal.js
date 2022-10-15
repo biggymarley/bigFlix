@@ -1,4 +1,4 @@
-import { ArrowBack, Close, PlayArrowRounded } from "@mui/icons-material";
+import { Close, PlayArrowRounded } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -84,17 +84,21 @@ const InfoLayer = ({ trailer, movie }) => {
             src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
           ></iframe>
         ) : (
-          <img
-            alt=""
-            src={
-              movie?.backdrop_path || movie?.poster_path
-                ? `${ImagesBaseUrl}${
-                    movie?.backdrop_path || movie?.poster_path
-                  }`
-                : bg
-            }
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+        <img
+          alt=""
+          src={
+            movie?.backdrop_path || movie?.poster_path
+              ? `${ImagesBaseUrl}${movie?.backdrop_path || movie?.poster_path}`
+              : bg
+          }
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "cover",
+            position: "relative",
+            top: "-25%",
+          }}
+        />
         )}
         <Box
           sx={{
@@ -189,6 +193,7 @@ const TextInfos = ({ movie }) => {
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
         alignItems={{ xs: "start", sm: "center" }}
+        sx={{width: { xs: "auto", md: "90%" }}}
       >
         <Stack direction={"row"} spacing={1} alignItems="center">
           {movie.release_date?.split("-")?.[0] ===
@@ -258,6 +263,7 @@ const classes = {
     position: "absolute",
     top: "52%",
     px: "5%",
+    width:"100%"
   },
   title: {
     color: "primary.main",

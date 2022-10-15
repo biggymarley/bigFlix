@@ -35,9 +35,12 @@ export default function Slider({ mode }) {
             perPage: 3,
           },
           900: {
+            drag: true,
             perPage: 2,
           },
           650: {
+            drag: true,
+
             perPage: 1,
           },
         },

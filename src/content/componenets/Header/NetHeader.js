@@ -13,9 +13,8 @@ import Typography from "@mui/material/Typography";
 import { Stack } from "@mui/system";
 import * as React from "react";
 import { useMatch, useNavigate } from "react-router-dom";
-import Logo from "../../../assets/imgs/logo";
+import Logo from "../../../assets/imgs/bigflix.png";
 import { SearchContext } from "../../context/context";
-import { theme } from "../../styling/theme";
 
 const pages = ["Home", "TV Shows", "Movies"];
 
@@ -45,7 +44,11 @@ const NetHeader = () => {
           <Toolbar disableGutters>
             <Box sx={{ flexGrow: { xs: 1, md: 0 }, paddingRight: 4 }}>
               <Box onClick={() => navigate("/")}>
-                <Logo color={theme.palette.secondary.main} width={90} />
+                <img
+                  src={Logo}
+                  alt=""
+                  style={{ objectFit: "contain", width: 90, cursor:"pointer" }}
+                />
               </Box>
             </Box>
 
@@ -88,11 +91,12 @@ const NetHeader = () => {
                       <Search sx={{ color: "primary.main" }} />
                     </InputAdornment>
                   ),
-                  endAdornment: (query !== "" ? 
-                    <IconButton position="start" onClick={clearSearchChange}>
-                      <Cancel sx={{ color: "primary.main" }} />
-                    </IconButton> : null
-                  ),
+                  endAdornment:
+                    query !== "" ? (
+                      <IconButton position="start" onClick={clearSearchChange}>
+                        <Cancel sx={{ color: "primary.main" }} />
+                      </IconButton>
+                    ) : null,
                 }}
               />
             </Box>

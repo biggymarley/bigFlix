@@ -6,7 +6,6 @@ export default function Loading({ loading }) {
   const ref = useRef();
   useEffect(() => {
     ref.current.setSpeed(4);
-    // ref.current.play();
   }, [ref]);
   useEffect(() => {
     if (loading === true) ref.current.play();
@@ -33,8 +32,6 @@ export default function Loading({ loading }) {
         sx={{
           position: "absolute",
           bottom: "20%",
-          transform: "translate(-50%, 50%)",
-          right: "50%",
         }}
       />
     </Backdrop>

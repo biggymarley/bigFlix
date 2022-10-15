@@ -17,7 +17,7 @@ export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
       {trailer ? (
         <Box sx={{ width: "calc(100%)", height: "100%" }}>
           <iframe
-          style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none" }}
             title="nowPlaying"
             width="100%"
             height="100%"
@@ -26,19 +26,17 @@ export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
           ></iframe>
         </Box>
       ) : (
-        <Box sx={{ width: "calc(100% - 2px)" }}>
-          <img
-            alt=""
-            src={
-              nowPlayingMovie?.poster_path || nowPlayingMovie?.backdrop_path
-                ? `${ImagesBaseUrl}${
-                    nowPlayingMovie?.poster_path ||
-                    nowPlayingMovie?.backdrop_path
-                  }`
-                : bg
-            }
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
+         
+          <Box sx={{ width: "calc(100% - 2px)", bgcolor: "black.main", height: "80vh",  }}>
+          {nowPlayingMovie?.poster_path || nowPlayingMovie?.backdrop_path ? (
+            <img
+              alt=""
+              src={`${ImagesBaseUrl}${
+                nowPlayingMovie?.poster_path || nowPlayingMovie?.backdrop_path
+              }`}
+              style={{ width: "100%", height: "100%", objectFit: "cover" }}
+            />
+          ) : null}
         </Box>
       )}
     </>

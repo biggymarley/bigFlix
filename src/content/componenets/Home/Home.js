@@ -2,10 +2,9 @@ import { Button, Container, Stack, Toolbar, Typography } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../../../assets/imgs/bg.jpg";
-import Logo from "../../../assets/imgs/logo";
+import Logo from "../../../assets/imgs/bigflix.png";
 import { SearchContext, StatusContext } from "../../context/context";
 import { StyledTextField } from "../../styledComponents/StyledTextField";
-import { theme } from "../../styling/theme";
 
 export default function Home() {
   const { dispatch } = useContext(StatusContext);
@@ -36,7 +35,7 @@ export default function Home() {
     <Container maxWidth={"xl"} sx={classes.root}>
       <Toolbar>
         <Stack direction={"row"} py={4} px={2}>
-          <Logo color={theme.palette.secondary.main} width={160} />
+          <img src={Logo} alt="" style={{ objectFit: "contain", width: 120 }} />
         </Stack>
       </Toolbar>
       <Stack
