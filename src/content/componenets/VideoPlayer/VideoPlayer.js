@@ -34,23 +34,58 @@ export default function VideoPlayer() {
       });
   };
 
+  if (document.addEventListener) {
+  }
+
+  function exitHandler() {
+    if (
+      !document.webkitIsFullScreen &&
+      !document.mozFullScreen &&
+      !document.msFullscreenElement
+    ) {
+      setisFull(false);
+    }
+  }
+
+  useEffect(() => {
+    document.addEventListener("fullscreenchange", exitHandler, false);
+    document.addEventListener("mozfullscreenchange", exitHandler, false);
+    document.addEventListener("MSFullscreenChange", exitHandler, false);
+    document.addEventListener("webkitfullscreenchange", exitHandler, false);
+
+    return () => {
+      document.removeEventListener("fullscreenchange", exitHandler, false);
+      document.removeEventListener("mozfullscreenchange", exitHandler, false);
+      document.removeEventListener("MSFullscreenChange", exitHandler, false);
+      document.removeEventListener(
+        "webkitfullscreenchange",
+        exitHandler,
+        false
+      );
+    };
+  }, []);
+
   const myListener = function () {
     setisMove(false);
   };
   const mouseMoveEffect = useCallback((timeout) => {
     clearTimeout(timeout);
-    timeout = setTimeout(myListener, 4000);
+    timeout = setTimeout(myListener, 6000);
     setisMove(true);
   }, []);
 
   useEffect(() => {
     let timeout;
     document.addEventListener("mousemove", () => {
-      mouseMoveEffect(timeout);
+      clearTimeout(timeout);
+      timeout = setTimeout(myListener, 6000);
+      setisMove(true);
     });
     return () =>
       document.removeEventListener("mousemove", () => {
-        mouseMoveEffect(timeout);
+        clearTimeout(timeout);
+        timeout = setTimeout(myListener, 6000);
+        setisMove(true);
       });
   }, [mouseMoveEffect]);
 

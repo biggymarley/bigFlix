@@ -193,7 +193,6 @@ const TextInfos = ({ movie }) => {
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
         alignItems={{ xs: "start", sm: "center" }}
-        sx={{width: { xs: "auto", md: "90%" }}}
       >
         <Stack direction={"row"} spacing={1} alignItems="center">
           {movie.release_date?.split("-")?.[0] ===
@@ -263,7 +262,7 @@ const classes = {
     position: "absolute",
     top: "52%",
     px: "5%",
-    width:"100%"
+    width:"-webkit-fill-available"
   },
   title: {
     color: "primary.main",
