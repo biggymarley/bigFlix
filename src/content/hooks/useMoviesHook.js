@@ -2,7 +2,7 @@ import { useCallback, useContext, useState } from "react";
 import {
   LatestMoviesApi,
   NowPlayingMoviesApi,
-  PopularMoviesApi
+  PopularMoviesApi,
 } from "../../config/apis";
 import { CheckMovieDB } from "../apisConnections/CheckMovieDB";
 import { GetMoviesList } from "../apisConnections/getMoviesList";
@@ -34,6 +34,11 @@ export default function useMoviesHook() {
   const [nowPlayingMovie, setNowPlayingMovie] = useState({});
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const { dispatch } = useContext(StatusContext);
+
+  const cleanMovies = () => {
+    setMovies([]);
+  };
+
   const fetchPopularMovies = useCallback(
     async (pageNumber) => {
       dispatch({ type: "showLoading", payload: true });
@@ -77,6 +82,17 @@ export default function useMoviesHook() {
       const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
       dispatch({ type: "showLoading", payload: false });
       if (fetchedMovies) setMovies([]);
+    },
+    [dispatch]
+  );
+
+  const filterSimilarMovies = useCallback(
+    async (id) => {
+      const fetchedMovies = await GetMoviesList("1", `movie/${id}/similar`);
+      if (fetchedMovies?.results) {
+        const fitred = await filterBadData(fetchedMovies?.results, "movie");
+        setMovies([...fitred]);
+      }
     },
     [dispatch]
   );
@@ -142,5 +158,7 @@ export default function useMoviesHook() {
     SearchAll,
     fetchMoviesByApi,
     fetchMoviesByGenre,
+    filterSimilarMovies,
+    cleanMovies,
   };
 }

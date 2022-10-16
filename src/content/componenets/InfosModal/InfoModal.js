@@ -9,7 +9,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
 import { MoviesContext } from "../../context/context";
+import useMoviesHook from "../../hooks/useMoviesHook";
 import useTrailerHook from "../../hooks/useTrailerHook";
+import { CardsMap } from "../ListScreen/SearchListScreen";
 
 const style = {
   position: "absolute",
@@ -27,10 +29,15 @@ const style = {
 export default function InfoModal() {
   const { InfosMovie, setInfoMovie } = useContext(MoviesContext);
   const { trailer, getTrailer } = useTrailerHook();
+  const { filterSimilarMovies, movies, cleanMovies } = useMoviesHook();
+  useEffect(() => {
+    if (InfosMovie?.id) getTrailer(InfosMovie?.id);
+  }, [getTrailer, InfosMovie?.id]);
 
   useEffect(() => {
-    getTrailer(InfosMovie?.id);
-  }, [getTrailer, InfosMovie?.id]);
+    if (InfosMovie?.id) filterSimilarMovies(InfosMovie?.id);
+    return () => cleanMovies();
+  }, [filterSimilarMovies, InfosMovie?.id]);
 
   return (
     <Modal
@@ -39,14 +46,18 @@ export default function InfoModal() {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      <Container disableGutters maxWidth="md" sx={style} id={"infomodal"}>
-        <InfoLayer trailer={trailer} movie={InfosMovie} />
+      <Container disableGutters maxWidth="lg" sx={style} id={"infomodal"}>
+        <InfoLayer
+          trailer={trailer}
+          movie={InfosMovie}
+          similarMovies={movies}
+        />
       </Container>
     </Modal>
   );
 }
 
-const InfoLayer = ({ trailer, movie }) => {
+const InfoLayer = ({ trailer, movie, similarMovies }) => {
   const navigate = useNavigate();
   const { setInfoMovie } = useContext(MoviesContext);
 
@@ -76,7 +87,11 @@ const InfoLayer = ({ trailer, movie }) => {
         </IconButton>
         {trailer ? (
           <iframe
-            style={{ pointerEvents: "none", position: "relative", top: "-25%" }}
+            style={{
+              pointerEvents: "none",
+              position: "relative",
+              top: "-25%",
+            }}
             title="movieframe"
             frameBorder={0}
             width="100%"
@@ -84,21 +99,23 @@ const InfoLayer = ({ trailer, movie }) => {
             src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
           ></iframe>
         ) : (
-        <img
-          alt=""
-          src={
-            movie?.backdrop_path || movie?.poster_path
-              ? `${ImagesBaseUrl}${movie?.backdrop_path || movie?.poster_path}`
-              : bg
-          }
-          style={{
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            position: "relative",
-            top: "-25%",
-          }}
-        />
+          <img
+            alt=""
+            src={
+              movie?.backdrop_path || movie?.poster_path
+                ? `${ImagesBaseUrl}${
+                    movie?.backdrop_path || movie?.poster_path
+                  }`
+                : bg
+            }
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              position: "relative",
+              top: "-25%",
+            }}
+          />
         )}
         <Box
           sx={{
@@ -106,12 +123,16 @@ const InfoLayer = ({ trailer, movie }) => {
             background: "linear-gradient(transparent 0% , #141414 80%)",
             zIndex: 2,
             position: "absolute",
-            bottom: "25%",
+            bottom: "24%",
             width: "100%",
           }}
         />
         <Stack sx={classes.infoStack} spacing={{ xs: 0.5, md: 1, lg: 2 }}>
           <TextInfos movie={movie} />
+          <Typography sx={{ ...classes.title, mt: 2, fontSize: "1.2rem" }}>
+            Similar Movies:
+          </Typography>
+          <CardsMap movies={similarMovies} />
         </Stack>
         <Stack
           direction={"column"}
@@ -180,6 +201,10 @@ const InfoLayer = ({ trailer, movie }) => {
           >
             Play
           </Button>
+          <Typography sx={{ ...classes.title, mt: 2, fontSize: "1.2rem" }}>
+            Similar Movies:
+          </Typography>
+          <CardsMap movies={similarMovies} />
         </Stack>
       </Box>
     </Stack>
@@ -262,7 +287,7 @@ const classes = {
     position: "absolute",
     top: "52%",
     px: "5%",
-    width:"-webkit-fill-available"
+    width: "-webkit-fill-available",
   },
   title: {
     color: "primary.main",

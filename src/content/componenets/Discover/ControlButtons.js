@@ -1,9 +1,11 @@
 import { InfoOutlined, PlayArrowRounded } from "@mui/icons-material";
 import { Button, Stack, Typography } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { MoviesContext } from "../../context/context";
 export const ControlButtons = ({ nowPlayingMovie }) => {
   const navigate = useNavigate();
+  const { setInfoMovie } = useContext(MoviesContext);
 
   const PlayVideo = () => {
     if (nowPlayingMovie?.media_type === "movie")
@@ -61,6 +63,7 @@ export const ControlButtons = ({ nowPlayingMovie }) => {
           Play
         </Button>
         <Button
+        onClick={() => setInfoMovie(nowPlayingMovie)}
           startIcon={<InfoOutlined sx={{ width: "2rem", height: "2rem" }} />}
           sx={{
             px: 4,

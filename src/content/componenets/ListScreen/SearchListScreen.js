@@ -37,7 +37,7 @@ export default function SearchListScreen() {
   );
 }
 
-const CardsMap = ({ movies }) => {
+export const CardsMap = ({ movies }) => {
   return (
     <Grid container spacing={1} rowSpacing={4}>
       {movies.map((movie, index) => (
