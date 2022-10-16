@@ -8,7 +8,7 @@ export default function DiscoverContent({ modes }) {
     <Stack>
       <Toolbar/>
       {modes.map((mode, index) => (
-        <Stack key={index} spacing={3} mt={3} ml={4}>
+        <Stack key={index} spacing={2} mt={3} ml={4}>
           <Typography
             sx={{
               color: "primary.main",

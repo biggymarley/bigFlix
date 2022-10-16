@@ -32,6 +32,7 @@ const filterBadData = async (array, type) => {
 export default function useMoviesHook() {
   const [movies, setMovies] = useState([]);
   const [nowPlayingMovie, setNowPlayingMovie] = useState({});
+  const [latestMovie, setLatestMovie] = useState({});
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const { dispatch } = useContext(StatusContext);
 
@@ -78,10 +79,11 @@ export default function useMoviesHook() {
 
   const fetchLatestMovie = useCallback(
     async (pageNumber) => {
-      dispatch({ type: "showLoading", payload: true });
+      // dispatch({ type: "showLoading", payload: true });
       const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
-      dispatch({ type: "showLoading", payload: false });
-      if (fetchedMovies) setMovies([]);
+      console.log(fetchedMovies)
+      // dispatch({ type: "showLoading", payload: false });
+      // if (fetchedMovies) setLatestMovie([]);
     },
     [dispatch]
   );

@@ -54,7 +54,7 @@ export default function Slider({ mode }) {
           ))
         : SceletonMovies.map((e, index) => (
             <SplideSlide key={index}>
-              <Skeleton variant="rectangular" width={"100%"} height={"25vw"} />
+              <Skeleton variant="rectangular" width={"100%"} height={"25vw"} animation="wave" />
             </SplideSlide>
           ))}
       {}
