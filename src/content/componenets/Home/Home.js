@@ -27,7 +27,7 @@ export default function Home() {
   const discover = () => {
     dispatch({ type: "showLoading", payload: true });
     setTimeout(() => {
-      navigate("/discover");
+      navigate("/discover/movies");
     }, 1000);
   };
 
@@ -93,7 +93,15 @@ export default function Home() {
           onClick={discover}
           sx={{ ...classes.button, mt: 5 }}
         >
-          Discover
+          Discover Movies
+        </Button>
+        <Button
+          color="secondary"
+          variant="outlined"
+          // onClick={discover}
+          sx={{ ...classes.button, mt: 5 }}
+        >
+          Discover Series
         </Button>
       </Stack>
     </Container>

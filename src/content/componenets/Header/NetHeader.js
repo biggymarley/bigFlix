@@ -23,7 +23,7 @@ const NetHeader = () => {
     React.useContext(SearchContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
-  let match = useMatch("/discover");
+  let match = useMatch("/discover/movies");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);

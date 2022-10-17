@@ -15,7 +15,7 @@ export default function MainRouter() {
         <Route index element={<Home />} />
         <Route path="/browse" element={<SearchListScreen />} />
         <Route path="/browse/:query/*" element={<SearchListScreen />} />
-        <Route path="/discover/*" element={<Discover />} />
+        <Route path="/discover/movies/*" element={<Discover />} />
       </Routes>
     </Box>
   );
