@@ -32,7 +32,7 @@ const filterBadData = async (array, type) => {
 export default function useMoviesHook() {
   const [movies, setMovies] = useState([]);
   const [nowPlayingMovie, setNowPlayingMovie] = useState({});
-  const [latestMovie, setLatestMovie] = useState({});
+  const [movieDetailes, setMovieDetailes] = useState({});
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const { dispatch } = useContext(StatusContext);
 
@@ -62,6 +62,20 @@ export default function useMoviesHook() {
     },
     [dispatch]
   );
+
+
+  const GetMovieDetailes = useCallback(
+    async (id) => {
+      dispatch({ type: "showLoading", payload: true });
+      const fetchedMovies = await GetMoviesList("1", `movie/${id}`);
+      if (fetchedMovies) {
+        setMovieDetailes({...fetchedMovies})
+      }
+      dispatch({ type: "showLoading", payload: false });
+    },
+    [dispatch]
+  );
+
 
   const fetchMoviesByGenre = useCallback(
     async (api, pageNumber, params) => {
@@ -153,6 +167,7 @@ export default function useMoviesHook() {
     movies,
     nowPlayingMovie,
     nowPlayingMovies,
+    movieDetailes,
     fetchPopularMovies,
     fetchLatestMovie,
     fetchNowPlayingMovie,
@@ -162,5 +177,6 @@ export default function useMoviesHook() {
     fetchMoviesByGenre,
     filterSimilarMovies,
     cleanMovies,
+    GetMovieDetailes
   };
 }

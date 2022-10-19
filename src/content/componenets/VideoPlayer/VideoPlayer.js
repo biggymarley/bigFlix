@@ -3,12 +3,18 @@ import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import useMoviesHook from "../../hooks/useMoviesHook";
 export default function VideoPlayer() {
+  const { movieDetailes, GetMovieDetailes } = useMoviesHook();
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
   let { id, ep, se } = useParams();
   const navigate = useNavigate();
   const ref = useRef({ current: null });
+
+  useEffect(() => {
+    GetMovieDetailes(id);
+  }, [id, GetMovieDetailes]);
 
   const goFull = () => {
     ref.current
@@ -97,15 +103,15 @@ export default function VideoPlayer() {
         maxWidth="xl"
         sx={{
           width: "100%",
-          height: "100vh",
+          height: "100%",
           position: "absolute",
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
-          backdropFilter: "blur(5px)",
+          bgcolor: "black.main",
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: 0,
@@ -121,7 +127,7 @@ export default function VideoPlayer() {
             backdropFilter: "blur(1000px)",
             ...(isMove && { top: "-50vh" }),
           }}
-        />
+        /> */}
         <IconButton
           color="primary"
           sx={{
@@ -157,6 +163,7 @@ export default function VideoPlayer() {
         </IconButton>
         <iframe
           frameBorder="0"
+          allowFullScreen={true}
           id="iframe"
           title="frame"
           style={{
@@ -165,8 +172,8 @@ export default function VideoPlayer() {
           }}
           src={
             se && ep
-              ? `https://vidsrc.me/embed/${id}/${se}-${ep}`
-              : `https://vidsrc.me/embed/${id}`
+              ? `https://dbgo.fun/imdb.php?id=${movieDetailes.imdb_id}&s=${se}&e=${ep}`
+              : `https://dbgo.fun/imdb.php?id=${movieDetailes.imdb_id}`
           }
           width="100%"
           height="100%"

@@ -15,7 +15,7 @@ export default function Loading({ loading }) {
     <Backdrop
       sx={{
         color: "#fff",
-        zIndex: (theme) => theme.zIndex.drawer + 1,
+        zIndex:9999,
         backgroundColor: "#000000",
       }}
       open={loading}

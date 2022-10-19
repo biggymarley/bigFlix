@@ -1,10 +1,11 @@
 import { Info } from "@mui/icons-material";
 import { Button, Grid, IconButton, Typography } from "@mui/material";
 import { Box, Stack } from "@mui/system";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
+import { MoviesContext } from "../../context/context";
 import useTrailerHook from "../../hooks/useTrailerHook";
 export default function SeriesCard({ movie }) {
   const [hovred, sethovred] = useState(false);
@@ -59,6 +60,7 @@ export default function SeriesCard({ movie }) {
 
 const InfoLayer = ({ trailer, movie }) => {
   const navigate = useNavigate();
+  const { setInfoMovie } = useContext(MoviesContext);
 
   const PlayVideo = () => {
     navigate(`watch/${movie.id}/1-1`);
@@ -98,7 +100,7 @@ const InfoLayer = ({ trailer, movie }) => {
       <Box sx={{ width: "calc(100%)", height: "40%" }}>
         {trailer ? (
           <iframe
-          style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none" }}
             title="serieframe"
             width="100%"
             frameBorder={0}
@@ -136,7 +138,10 @@ const InfoLayer = ({ trailer, movie }) => {
           >
             Play
           </Button>
-          <IconButton color="primary">
+          <IconButton
+            color="primary"
+            onClick={() => setInfoMovie({ ...movie })}
+          >
             <Info sx={{ fontSize: "2rem", opacity: 0.4 }} />
           </IconButton>
         </Stack>
