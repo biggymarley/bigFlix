@@ -65,9 +65,9 @@ export default function useMoviesHook() {
 
 
   const GetMovieDetailes = useCallback(
-    async (id) => {
+    async (id, media_type) => {
       dispatch({ type: "showLoading", payload: true });
-      const fetchedMovies = await GetMoviesList("1", `movie/${id}`);
+      const fetchedMovies = await GetMoviesList("1", media_type === "movie" ? `movie/${id}` : `tv/${id}/external_ids` );
       if (fetchedMovies) {
         setMovieDetailes({...fetchedMovies})
       }

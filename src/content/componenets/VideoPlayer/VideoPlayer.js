@@ -3,18 +3,19 @@ import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import useMoviesHook from "../../hooks/useMoviesHook";
+// import useMoviesHook from "../../hooks/useMoviesHook";
 export default function VideoPlayer() {
-  const { movieDetailes, GetMovieDetailes } = useMoviesHook();
+  // const { movieDetailes, GetMovieDetailes } = useMoviesHook();
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
   let { id, ep, se } = useParams();
   const navigate = useNavigate();
   const ref = useRef({ current: null });
 
-  useEffect(() => {
-    GetMovieDetailes(id);
-  }, [id, GetMovieDetailes]);
+  // useEffect(() => {
+  //   if (se || (se && ep)) GetMovieDetailes(id, "tv");
+  //   else GetMovieDetailes(id, "movie");
+  // }, [id, GetMovieDetailes]);
 
   const goFull = () => {
     ref.current
@@ -40,9 +41,6 @@ export default function VideoPlayer() {
       });
   };
 
-  if (document.addEventListener) {
-  }
-
   function exitHandler() {
     if (
       !document.webkitIsFullScreen &&
@@ -52,6 +50,11 @@ export default function VideoPlayer() {
       setisFull(false);
     }
   }
+  useEffect(() => {
+    setTimeout(() => {
+      goFull();
+    }, 200);
+  }, [ref.current]);
 
   useEffect(() => {
     document.addEventListener("fullscreenchange", exitHandler, false);
@@ -111,7 +114,7 @@ export default function VideoPlayer() {
           bgcolor: "black.main",
         }}
       >
-        {/* <Box
+        <Box
           sx={{
             position: "absolute",
             top: 0,
@@ -127,7 +130,7 @@ export default function VideoPlayer() {
             backdropFilter: "blur(1000px)",
             ...(isMove && { top: "-50vh" }),
           }}
-        /> */}
+        />
         <IconButton
           color="primary"
           sx={{
@@ -172,8 +175,8 @@ export default function VideoPlayer() {
           }}
           src={
             se && ep
-              ? `https://dbgo.fun/imdb.php?id=${movieDetailes.imdb_id}&s=${se}&e=${ep}`
-              : `https://dbgo.fun/imdb.php?id=${movieDetailes.imdb_id}`
+              ? `${process.env.REACT_APP_MOVIES_URL_BASE}${id}/${se}-${ep}`
+              : `${process.env.REACT_APP_MOVIES_URL_BASE}${id}`
           }
           width="100%"
           height="100%"
