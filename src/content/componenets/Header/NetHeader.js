@@ -16,7 +16,15 @@ import { useMatch, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/imgs/bigflix.png";
 import { SearchContext } from "../../context/context";
 
-const pages = ["Home", "TV Shows", "Movies"];
+const pagesS = [
+  { label: "Home", path: "/" },
+  { label: "TV Shows", path: "/discover/series" },
+];
+
+const pagesM = [
+  { label: "Home", path: "/" },
+  { label: "Movies", path: "/discover/movies" },
+];
 
 const NetHeader = () => {
   const { query, HandleSearchChange, clearSearchChange } =
@@ -24,6 +32,7 @@ const NetHeader = () => {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const navigate = useNavigate();
   let match = useMatch("/discover/movies");
+  let matchS = useMatch("/discover/series");
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -37,7 +46,7 @@ const NetHeader = () => {
     <>
       <AppBar
         position="fixed"
-        sx={{ ...classes.appbar, ...(match && { background: "#000000" }) }}
+        sx={{ ...classes.appbar, ...((match || matchS) && { background: "#000000" }) }}
         elevation={0}
       >
         <Container maxWidth="xl">
@@ -47,7 +56,7 @@ const NetHeader = () => {
                 <img
                   src={Logo}
                   alt=""
-                  style={{ objectFit: "contain", width: 90, cursor:"pointer" }}
+                  style={{ objectFit: "contain", width: 90, cursor: "pointer" }}
                 />
               </Box>
             </Box>
@@ -58,10 +67,13 @@ const NetHeader = () => {
               alignItems="center"
               direction="row"
             >
-              {pages.map((page) => (
+              {(match ? pagesS : pagesM).map((page) => (
                 <Button
-                  key={page}
-                  onClick={handleCloseNavMenu}
+                  key={page.label}
+                  onClick={() => {
+                    handleCloseNavMenu();
+                    navigate(page.path);
+                  }}
                   sx={{
                     my: 2,
                     color: "white",
@@ -69,7 +81,7 @@ const NetHeader = () => {
                     textTransform: "capitalize",
                   }}
                 >
-                  {page}
+                  {page.label}
                 </Button>
               ))}
             </Stack>
@@ -135,10 +147,13 @@ const NetHeader = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.map((page) => (
+                {(match ? pagesS : pagesM).map((page) => (
                   <MenuItem
-                    key={page}
-                    onClick={handleCloseNavMenu}
+                    key={page.label}
+                    onClick={() => {
+                      handleCloseNavMenu();
+                      navigate(page.path);
+                    }}
                     sx={{
                       my: 2,
                       color: "white",
@@ -146,7 +161,7 @@ const NetHeader = () => {
                       textTransform: "capitalize",
                     }}
                   >
-                    <Typography textAlign="center">{page}</Typography>
+                    <Typography textAlign="center">{page.label}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
@@ -154,7 +169,7 @@ const NetHeader = () => {
           </Toolbar>
         </Container>
       </AppBar>
-      {match ? null : <Toolbar />}
+      {match || matchS ? null : <Toolbar />}
     </>
   );
 };

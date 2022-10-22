@@ -3,13 +3,14 @@ import { Splide, SplideSlide } from "@splidejs/react-splide";
 import React, { useEffect } from "react";
 import useMoviesHook from "../../hooks/useMoviesHook";
 import MovieCard from "../ListScreen/MovieCard";
+import SeriesCard from "../ListScreen/SeriesCard";
 
-export default function Slider({ mode }) {
+export default function Slider({ mode, type }) {
   const { fetchMoviesByGenre, fetchMoviesByApi, movies } = useMoviesHook();
 
   useEffect(() => {
-    if (mode.params) fetchMoviesByGenre(mode.api, "1", mode.params);
-    else fetchMoviesByApi(mode.api, "1");
+    if (mode.params) fetchMoviesByGenre(mode.api, "1", mode.params, type);
+    else fetchMoviesByApi(mode.api, "1", type);
   }, [mode, fetchMoviesByApi, fetchMoviesByGenre]);
 
   return (
@@ -49,12 +50,21 @@ export default function Slider({ mode }) {
       {movies.length > 0
         ? movies.map((movie, index) => (
             <SplideSlide key={index}>
-              <MovieCard movie={movie} />
+              {type === "tv" ? (
+                <SeriesCard movie={movie} />
+              ) : (
+                <MovieCard movie={movie} />
+              )}
             </SplideSlide>
           ))
         : SceletonMovies.map((e, index) => (
             <SplideSlide key={index}>
-              <Skeleton variant="rectangular" width={"100%"} height={"25vw"} animation="wave" />
+              <Skeleton
+                variant="rectangular"
+                width={"100%"}
+                height={"25vw"}
+                animation="wave"
+              />
             </SplideSlide>
           ))}
       {}

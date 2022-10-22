@@ -3,7 +3,7 @@ import { Stack } from "@mui/system";
 import React from "react";
 import Slider from "../Slider/Slider";
 
-export default function DiscoverContent({ modes }) {
+export default function DiscoverContent({ modes , type}) {
   return (
     <Stack>
       <Toolbar/>
@@ -18,7 +18,7 @@ export default function DiscoverContent({ modes }) {
           >
             {mode.label}
           </Typography>
-          <Slider mode={mode} />
+          <Slider mode={mode} type={type} />
         </Stack>
       ))}
     </Stack>

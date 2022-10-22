@@ -1,4 +1,4 @@
-import { Container, Grid, Toolbar } from "@mui/material";
+import { Container, Grid, Skeleton, Toolbar } from "@mui/material";
 import React, { useEffect } from "react";
 import { Route, Routes, useParams } from "react-router-dom";
 import useMoviesHook from "../../hooks/useMoviesHook";
@@ -23,11 +23,7 @@ export default function SearchListScreen() {
   return (
     <Container maxWidth="xl">
       <Toolbar />
-      {movies.length > 0 ? (
-        <CardsMap movies={movies} />
-      ) : (
-        <Nodatafound/>
-      )}
+      {movies.length > 0 ? <CardsMap movies={movies} /> : <Nodatafound />}
 
       <Routes>
         <Route path="watch/:id/:se-:ep/" element={<VideoPlayer />} />
@@ -36,13 +32,25 @@ export default function SearchListScreen() {
     </Container>
   );
 }
+const SceletonMovies = Array.from(Array(20).keys());
 
 export const CardsMap = ({ movies }) => {
   return (
     <Grid container spacing={1} rowSpacing={4}>
-      {movies.map((movie, index) => (
-        <Switcher movie={movie} key={index} type={movie.media_type} />
-      ))}
+      {movies.length > 0
+        ? movies.map((movie, index) => (
+            <Switcher movie={movie} key={index} type={movie.media_type} />
+          ))
+        : SceletonMovies.map((e, index) => (
+            <Grid item xs={12} sm={4} md={3} lg={2.4} key={index}>
+              <Skeleton
+                variant="rectangular"
+                width={"100%"}
+                height={"30vw"}
+                animation="wave"
+              />
+            </Grid>
+          ))}
     </Grid>
   );
 };

@@ -1,6 +1,5 @@
 import { Box } from "@mui/system";
 import React from "react";
-import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
 export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
   return (
@@ -26,8 +25,9 @@ export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
           ></iframe>
         </Box>
       ) : (
-         
-          <Box sx={{ width: "calc(100% - 2px)", bgcolor: "black.main", height: "80vh",  }}>
+        <Box
+          sx={{ width: "calc(100%)", bgcolor: "black.main", height: "80vh" }}
+        >
           {nowPlayingMovie?.poster_path || nowPlayingMovie?.backdrop_path ? (
             <img
               alt=""

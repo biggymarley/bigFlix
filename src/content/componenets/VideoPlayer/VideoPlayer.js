@@ -3,19 +3,12 @@ import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import useMoviesHook from "../../hooks/useMoviesHook";
 export default function VideoPlayer() {
-  // const { movieDetailes, GetMovieDetailes } = useMoviesHook();
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
   let { id, ep, se } = useParams();
   const navigate = useNavigate();
   const ref = useRef({ current: null });
-
-  // useEffect(() => {
-  //   if (se || (se && ep)) GetMovieDetailes(id, "tv");
-  //   else GetMovieDetailes(id, "movie");
-  // }, [id, GetMovieDetailes]);
 
   const goFull = () => {
     ref.current
@@ -54,7 +47,7 @@ export default function VideoPlayer() {
     setTimeout(() => {
       goFull();
     }, 200);
-  }, [ref.current]);
+  }, []);
 
   useEffect(() => {
     document.addEventListener("fullscreenchange", exitHandler, false);

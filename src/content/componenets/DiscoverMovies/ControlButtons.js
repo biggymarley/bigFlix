@@ -8,9 +8,9 @@ export const ControlButtons = ({ nowPlayingMovie }) => {
   const { setInfoMovie } = useContext(MoviesContext);
 
   const PlayVideo = () => {
-    if (nowPlayingMovie?.media_type === "movie")
-      navigate(`watch/${nowPlayingMovie.id}`);
-    else navigate(`watch/${nowPlayingMovie.id}/1-1`);
+    if (nowPlayingMovie?.media_type === "tv")
+      navigate(`watch/${nowPlayingMovie.id}/1-1`);
+    else navigate(`watch/${nowPlayingMovie.id}`);
   };
   return (
     <Stack
@@ -63,7 +63,7 @@ export const ControlButtons = ({ nowPlayingMovie }) => {
           Play
         </Button>
         <Button
-        onClick={() => setInfoMovie(nowPlayingMovie)}
+          onClick={() => setInfoMovie(nowPlayingMovie)}
           startIcon={<InfoOutlined sx={{ width: "2rem", height: "2rem" }} />}
           sx={{
             px: 4,

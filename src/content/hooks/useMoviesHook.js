@@ -51,11 +51,11 @@ export default function useMoviesHook() {
   );
 
   const fetchMoviesByApi = useCallback(
-    async (api, pageNumber) => {
+    async (api, pageNumber,type) => {
       const fetchedMovies = await GetMoviesList(pageNumber, api);
       if (fetchedMovies?.results) {
         dispatch({ type: "showLoading", payload: true });
-        const fitred = await filterBadData(fetchedMovies?.results, "movie");
+        const fitred = await filterBadData(fetchedMovies?.results, type ?? "movie");
         setMovies([...fitred]);
         dispatch({ type: "showLoading", payload: false });
       }
@@ -78,11 +78,11 @@ export default function useMoviesHook() {
 
 
   const fetchMoviesByGenre = useCallback(
-    async (api, pageNumber, params) => {
+    async (api, pageNumber, params, type) => {
       const fetchedMovies = await getMoviesWithParams(pageNumber, api, params);
       if (fetchedMovies?.results) {
         dispatch({ type: "showLoading", payload: true });
-        const fitred = await filterBadData(fetchedMovies?.results, "movie");
+        const fitred = await filterBadData(fetchedMovies?.results, type ?? "movie");
         setMovies([...fitred]);
         dispatch({ type: "showLoading", payload: false });
       }
