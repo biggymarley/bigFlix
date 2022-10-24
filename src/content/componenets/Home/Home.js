@@ -31,6 +31,13 @@ export default function Home() {
     }, 1000);
   };
 
+  const discoverSeries = () => {
+    dispatch({ type: "showLoading", payload: true });
+    setTimeout(() => {
+      navigate("/discover/series");
+    }, 1000);
+  };
+
   return (
     <Container maxWidth={"xl"} sx={classes.root}>
       <Toolbar>
@@ -98,7 +105,7 @@ export default function Home() {
         <Button
           color="secondary"
           variant="outlined"
-          // onClick={discover}
+          onClick={discoverSeries}
           sx={{ ...classes.button, mt: 5 }}
         >
           Discover Series

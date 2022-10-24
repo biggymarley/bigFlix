@@ -12,7 +12,6 @@ import { StatusContext } from "../context/context";
 
 const filterBadData = async (array, type) => {
   try {
-    console.log(array);
     let filtred = [];
     for (let ar in array) {
       const res = await CheckMovieDB(
@@ -24,13 +23,13 @@ const filterBadData = async (array, type) => {
     }
     return filtred;
   } catch (error) {
-    console.log(error);
     return [];
   }
 };
 
 export default function useMoviesHook() {
   const [movies, setMovies] = useState([]);
+  const [episodes, setEpisodes] = useState([]);
   const [nowPlayingMovie, setNowPlayingMovie] = useState({});
   const [movieDetailes, setMovieDetailes] = useState({});
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
@@ -39,6 +38,16 @@ export default function useMoviesHook() {
   const cleanMovies = () => {
     setMovies([]);
   };
+
+  const fetchEpisodes = useCallback(
+    async (serieId, season) => {
+      const fetchedMovies = await GetMoviesList("1", `tv/${serieId}/season/${season + 1}`);
+      if (fetchedMovies) {
+        setEpisodes([...fetchedMovies.episodes]);
+      }
+    },
+    []
+  );
 
   const fetchPopularMovies = useCallback(
     async (pageNumber) => {
@@ -51,11 +60,14 @@ export default function useMoviesHook() {
   );
 
   const fetchMoviesByApi = useCallback(
-    async (api, pageNumber,type) => {
+    async (api, pageNumber, type) => {
       const fetchedMovies = await GetMoviesList(pageNumber, api);
       if (fetchedMovies?.results) {
         dispatch({ type: "showLoading", payload: true });
-        const fitred = await filterBadData(fetchedMovies?.results, type ?? "movie");
+        const fitred = await filterBadData(
+          fetchedMovies?.results,
+          type ?? "movie"
+        );
         setMovies([...fitred]);
         dispatch({ type: "showLoading", payload: false });
       }
@@ -63,30 +75,33 @@ export default function useMoviesHook() {
     [dispatch]
   );
 
-
   const GetMovieDetailes = useCallback(
     async (id, media_type) => {
       dispatch({ type: "showLoading", payload: true });
-      const fetchedMovies = await GetMoviesList("1", media_type === "movie" ? `movie/${id}` : `tv/${id}/external_ids` );
+      const fetchedMovies = await GetMoviesList(
+        "1",
+        media_type === "movie" ? `movie/${id}` : `tv/${id}`
+      );
       if (fetchedMovies) {
-        setMovieDetailes({...fetchedMovies})
+        setMovieDetailes({ ...fetchedMovies });
       }
       dispatch({ type: "showLoading", payload: false });
     },
     [dispatch]
   );
 
-
   const fetchMoviesByGenre = useCallback(
     async (api, pageNumber, params, type) => {
       const fetchedMovies = await getMoviesWithParams(pageNumber, api, params);
       if (fetchedMovies?.results) {
         dispatch({ type: "showLoading", payload: true });
-        const fitred = await filterBadData(fetchedMovies?.results, type ?? "movie");
+        const fitred = await filterBadData(
+          fetchedMovies?.results,
+          type ?? "movie"
+        );
         setMovies([...fitred]);
         dispatch({ type: "showLoading", payload: false });
       }
-      // console.log(fetchedMovies, api);
     },
     [dispatch]
   );
@@ -95,7 +110,6 @@ export default function useMoviesHook() {
     async (pageNumber) => {
       // dispatch({ type: "showLoading", payload: true });
       const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
-      console.log(fetchedMovies)
       // dispatch({ type: "showLoading", payload: false });
       // if (fetchedMovies) setLatestMovie([]);
     },
@@ -103,10 +117,10 @@ export default function useMoviesHook() {
   );
 
   const filterSimilarMovies = useCallback(
-    async (id) => {
-      const fetchedMovies = await GetMoviesList("1", `movie/${id}/similar`);
+    async (id, type) => {
+      const fetchedMovies = await GetMoviesList("1", `${type}/${id}/similar`);
       if (fetchedMovies?.results) {
-        const fitred = await filterBadData(fetchedMovies?.results, "movie");
+        const fitred = await filterBadData(fetchedMovies?.results, type);
         setMovies([...fitred]);
       }
     },
@@ -168,6 +182,7 @@ export default function useMoviesHook() {
     nowPlayingMovie,
     nowPlayingMovies,
     movieDetailes,
+    episodes,
     fetchPopularMovies,
     fetchLatestMovie,
     fetchNowPlayingMovie,
@@ -177,6 +192,7 @@ export default function useMoviesHook() {
     fetchMoviesByGenre,
     filterSimilarMovies,
     cleanMovies,
-    GetMovieDetailes
+    GetMovieDetailes,
+    fetchEpisodes,
   };
 }

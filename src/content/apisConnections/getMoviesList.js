@@ -5,7 +5,7 @@ export const GetMoviesList = async (pageNumber, api) => {
     const movies = await axiosMovies.get(api);
     return movies?.data ?? [];
   } catch (error) {
-    console.error(error);
+    // console.error(error);
     return null;
   }
 };

@@ -39,7 +39,17 @@ export const CardsMap = ({ movies }) => {
     <Grid container spacing={1} rowSpacing={4}>
       {movies.length > 0
         ? movies.map((movie, index) => (
-            <Switcher movie={movie} key={index} type={movie.media_type} />
+            <Switcher
+              movie={movie}
+              key={index}
+              type={
+                movie.media_type
+                  ? movie.media_type
+                  : movie.first_air_date
+                  ? "tv"
+                  : "movie"
+              }
+            />
           ))
         : SceletonMovies.map((e, index) => (
             <Grid item xs={12} sm={4} md={3} lg={2.4} key={index}>

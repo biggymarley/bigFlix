@@ -12,6 +12,7 @@ import { MoviesContext } from "../../context/context";
 import useMoviesHook from "../../hooks/useMoviesHook";
 import useTrailerHook from "../../hooks/useTrailerHook";
 import { CardsMap } from "../ListScreen/SearchListScreen";
+import SeriesEpisodes from "./SeriesEpisodes";
 
 const style = {
   position: "absolute",
@@ -35,9 +36,13 @@ export default function InfoModal() {
   }, [getTrailer, InfosMovie?.id]);
 
   useEffect(() => {
-    if (InfosMovie?.id) filterSimilarMovies(InfosMovie?.id);
+    if (InfosMovie?.id)
+      filterSimilarMovies(
+        InfosMovie?.id,
+        InfosMovie?.first_air_date ? "tv" : "movie"
+      );
     return () => cleanMovies();
-  }, [filterSimilarMovies, InfosMovie?.id]);
+  }, [filterSimilarMovies, InfosMovie]);
 
   return (
     <Modal
@@ -129,8 +134,9 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
         />
         <Stack sx={classes.infoStack} spacing={{ xs: 0.5, md: 1, lg: 2 }}>
           <TextInfos movie={movie} />
+          {movie.first_air_date ? <SeriesEpisodes serie={movie} /> : null}
           <Typography sx={{ ...classes.title, mt: 2, fontSize: "1.2rem" }}>
-            Similar Movies:
+            Similar {movie.first_air_date ? "Series" : "Movies"}:
           </Typography>
           <CardsMap movies={similarMovies} />
         </Stack>
@@ -151,7 +157,7 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
                 }}
                 variant="h1"
               >
-                {movie.title}
+                {movie.title ?? movie.name}
               </Typography>
             </Stack>
             <Typography
@@ -163,7 +169,7 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
               variant="caption"
               component={"span"}
             >
-              {movie.media_type === "tv" ? "Series" : "Movie"}
+              {movie.first_air_date ? "Series" : "Movie"}
             </Typography>
           </Stack>
           <Button
@@ -201,8 +207,9 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
           >
             Play
           </Button>
+          {movie.first_air_date ? <SeriesEpisodes serie={movie} /> : null}
           <Typography sx={{ ...classes.title, mt: 2, fontSize: "1.2rem" }}>
-            Similar Movies:
+            Similar {movie.first_air_date ? "Series" : "Movies"}:
           </Typography>
           <CardsMap movies={similarMovies} />
         </Stack>
@@ -220,7 +227,8 @@ const TextInfos = ({ movie }) => {
         alignItems={{ xs: "start", sm: "center" }}
       >
         <Stack direction={"row"} spacing={1} alignItems="center">
-          {movie.release_date?.split("-")?.[0] ===
+          {(movie.release_date?.split("-")?.[0] ||
+            movie.first_air_date?.split("-")?.[0]) ===
           new Date().getFullYear().toString() ? (
             <Typography
               sx={{
@@ -240,7 +248,9 @@ const TextInfos = ({ movie }) => {
             variant="caption"
             component={"span"}
           >
-            {movie.release_date?.split("-")?.[0] || "no Date"}
+            {movie.release_date?.split("-")?.[0] ||
+              movie.first_air_date?.split("-")?.[0] ||
+              "no Date"}
           </Typography>
         </Stack>
         <Stack>
