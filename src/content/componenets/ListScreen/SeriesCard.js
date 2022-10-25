@@ -64,7 +64,11 @@ const InfoLayer = ({ trailer, movie }) => {
   const { setInfoMovie } = useContext(MoviesContext);
 
   const PlayVideo = () => {
-    navigate(`watch/${movie.id}/1-1`);
+    navigate(`watch/${movie.id}/1-1`, {
+      state: {
+        movie,
+      },
+    });
   };
   return (
     <Stack

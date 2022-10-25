@@ -2,11 +2,13 @@ import { ArrowBack, Fullscreen, FullscreenExit } from "@mui/icons-material";
 import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 export default function VideoPlayer() {
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
   let { id, ep, se } = useParams();
+  const { state } = useLocation();
+  console.log("state", state);
   const navigate = useNavigate();
   const ref = useRef({ current: null });
 
