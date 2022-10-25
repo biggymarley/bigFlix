@@ -35,7 +35,7 @@ export default function InfoModal() {
   useEffect(() => {
     if (InfosMovie?.id)
       getTrailer(InfosMovie?.id, InfosMovie?.first_air_date ? "tv" : "movie");
-  }, [getTrailer, InfosMovie?.id]);
+  }, [getTrailer, InfosMovie]);
 
   useEffect(() => {
     if (InfosMovie?.id)
@@ -44,7 +44,7 @@ export default function InfoModal() {
         InfosMovie?.first_air_date ? "tv" : "movie"
       );
     return () => cleanMovies();
-  }, [filterSimilarMovies, InfosMovie]);
+  }, [filterSimilarMovies, InfosMovie, cleanMovies]);
 
   return (
     <Modal

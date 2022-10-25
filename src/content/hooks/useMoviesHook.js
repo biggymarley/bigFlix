@@ -1,8 +1,7 @@
 import { useCallback, useContext, useState } from "react";
 import {
-  LatestMoviesApi,
   NowPlayingMoviesApi,
-  PopularMoviesApi,
+  PopularMoviesApi
 } from "../../config/apis";
 import { CheckMovieDB } from "../apisConnections/CheckMovieDB";
 import { GetMoviesList } from "../apisConnections/getMoviesList";
@@ -109,11 +108,11 @@ export default function useMoviesHook() {
   const fetchLatestMovie = useCallback(
     async (pageNumber) => {
       // dispatch({ type: "showLoading", payload: true });
-      const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
+      // const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
       // dispatch({ type: "showLoading", payload: false });
       // if (fetchedMovies) setLatestMovie([]);
     },
-    [dispatch]
+    []
   );
 
   const filterSimilarMovies = useCallback(
@@ -124,7 +123,7 @@ export default function useMoviesHook() {
         setMovies([...fitred]);
       }
     },
-    [dispatch]
+    []
   );
 
   const fetchNowPlayingMovie = useCallback(

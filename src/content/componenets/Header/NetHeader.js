@@ -1,6 +1,6 @@
 import { Cancel, Search } from "@mui/icons-material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { InputAdornment, TextField } from "@mui/material";
+import { Divider, InputAdornment, TextField } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -42,16 +42,34 @@ const NetHeader = () => {
     setAnchorElNav(null);
   };
 
+  const EnterListner = (event) => {
+    if (event.key === "Enter") SearchQuery();
+  };
+
+  const SearchQuery = () => {
+    if (query === "") return;
+    navigate(`/browse/${query}`);
+  };
+
   return (
     <>
       <AppBar
         position="fixed"
-        sx={{ ...classes.appbar, ...((match || matchS) && { background: "#000000" }) }}
+        sx={{
+          ...classes.appbar,
+          ...((match || matchS) && { background: "#000000" }),
+        }}
         elevation={0}
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
-            <Box sx={{ flexGrow: { xs: 1, md: 0 }, paddingRight: 4 }}>
+            <Box
+              sx={{
+                display: { xs: "none", sm: "block" },
+                flexGrow: { xs: 1, md: 0 },
+                paddingRight: 4,
+              }}
+            >
               <Box onClick={() => navigate("/")}>
                 <img
                   src={Logo}
@@ -86,11 +104,12 @@ const NetHeader = () => {
               ))}
             </Stack>
 
-            <Box sx={{ overflow: "hidden" }}>
+            <Box sx={{ overflow: "hidden", flexGrow: { xs: 1, sm: 0 } }}>
               <TextField
                 id="search"
                 value={query}
                 onChange={HandleSearchChange}
+                onKeyDown={EnterListner}
                 variant="outlined"
                 size="small"
                 focused
@@ -100,7 +119,9 @@ const NetHeader = () => {
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
-                      <Search sx={{ color: "primary.main" }} />
+                      <IconButton onClick={SearchQuery}>
+                        <Search sx={{ color: "primary.main" }} />
+                      </IconButton>
                     </InputAdornment>
                   ),
                   endAdornment:
@@ -147,6 +168,26 @@ const NetHeader = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
+                <Box
+                  sx={{
+                    flexGrow: { xs: 1, md: 0 },
+                    display: { xs: "block", sm: "none" },
+       
+                  }}
+                >
+                  <Box onClick={() => navigate("/")} sx={{ px: 5, my: 2 }}>
+                    <img
+                      src={Logo}
+                      alt=""
+                      style={{
+                        objectFit: "contain",
+                        width: 90,
+                        cursor: "pointer",
+                      }}
+                    />
+                  </Box>
+                  <Divider sx={{ bgcolor: "black.light" }} />
+                </Box>
                 {(match ? pagesS : pagesM).map((page) => (
                   <MenuItem
                     key={page.label}

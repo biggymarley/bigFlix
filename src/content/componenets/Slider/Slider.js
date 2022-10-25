@@ -11,7 +11,7 @@ export default function Slider({ mode, type }) {
   useEffect(() => {
     if (mode.params) fetchMoviesByGenre(mode.api, "1", mode.params, type);
     else fetchMoviesByApi(mode.api, "1", type);
-  }, [mode, fetchMoviesByApi, fetchMoviesByGenre]);
+  }, [mode, fetchMoviesByApi, fetchMoviesByGenre, type]);
 
   return (
     <Splide
