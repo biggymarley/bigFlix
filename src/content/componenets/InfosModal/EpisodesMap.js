@@ -4,25 +4,46 @@ import React, { useEffect } from "react";
 import { ImagesBaseUrl } from "../../../config/apis";
 import useMoviesHook from "../../hooks/useMoviesHook";
 import bg from "../../../assets/imgs/bg.jpg";
+import { useLocation, useNavigate } from "react-router-dom";
 export default function EpisodesMap({ movieDetailes, seasonChoise }) {
   const { episodes, fetchEpisodes } = useMoviesHook();
   useEffect(() => {
     if (movieDetailes.id) fetchEpisodes(movieDetailes.id, seasonChoise);
   }, [movieDetailes, seasonChoise, fetchEpisodes]);
-
+  const navigate = useNavigate();
+  let location = useLocation();
+  const PlayVideo = (id, ep) => {
+    navigate(`${location.pathname}/watch/${id}/${seasonChoise + 1}-${ep}`);
+    // setInfoMovie(null);
+  };
   return (
-    <Stack spacing={4} sx={{ mt: 4,mb: 4 }}>
-      <EpisodeInfo episodes={episodes} movieDetailes={movieDetailes} />
+    <Stack spacing={4} sx={{ mt: 4, mb: 4 }}>
+      <EpisodeInfo
+        episodes={episodes}
+        movieDetailes={movieDetailes}
+        PlayVideo={PlayVideo}
+      />
       <Divider sx={{ bgcolor: "black.light" }} />
     </Stack>
   );
 }
 
-const EpisodeInfo = ({ episodes, movieDetailes }) => {
+const EpisodeInfo = ({ episodes, movieDetailes, PlayVideo }) => {
   return episodes?.map((episode, index) => (
     <>
       <Divider sx={{ bgcolor: "black.light" }} />
-      <Stack key={index} direction={{xs:"column", md:"row"}} spacing={2} alignItems="center">
+      <Stack
+        key={index}
+        direction={{ xs: "column", md: "row" }}
+        spacing={2}
+        alignItems="center"
+        onClick={() => PlayVideo(movieDetailes.id, episode.episode_number)}
+        sx={{
+          "&:hover": {
+            bgcolor: "black.medium",
+          },
+        }}
+      >
         <Typography sx={classes.number}>
           {index + 1 < 10 ? (
             <Typography
@@ -47,7 +68,7 @@ const EpisodeInfo = ({ episodes, movieDetailes }) => {
             alt="still"
           />
         </Box>
-        <Stack spacing={2} sx={{flexGrow:1}}>
+        <Stack spacing={2} sx={{ flexGrow: 1 }}>
           <Stack
             direction={{ xs: "column", md: "row" }}
             spacing={2}

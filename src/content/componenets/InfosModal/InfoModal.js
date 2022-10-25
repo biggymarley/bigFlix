@@ -68,7 +68,9 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
 
   let location = useLocation();
   const PlayVideo = () => {
-    navigate(`${location.pathname}/watch/${movie.id}`);
+    if (movie?.first_air_date)
+      navigate(`${location.pathname}/watch/${movie.id}/1-1`);
+    else navigate(`${location.pathname}/watch/${movie.id}`);
     setInfoMovie(null);
   };
   return (
@@ -154,6 +156,7 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
                   color: "primary.main",
                   fontSize: "clamp(16px, 4vw, 2rem)",
                   whiteSpace: "nowrap",
+                  textShadow:"1px 1px 5px black"
                 }}
                 variant="h1"
               >
