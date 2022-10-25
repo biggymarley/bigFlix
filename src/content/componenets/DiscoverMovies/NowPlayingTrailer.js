@@ -1,6 +1,7 @@
 import { Box } from "@mui/system";
 import React from "react";
 import { ImagesBaseUrl } from "../../../config/apis";
+import YoutubePlayer from "../YoutubePlayer/YoutubePlayer";
 export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
   return (
     <>
@@ -14,15 +15,13 @@ export const NowPlayingTrailer = ({ trailer, nowPlayingMovie }) => {
         }}
       />
       {trailer ? (
-        <Box sx={{ width: "calc(100%)", height: "100%" }}>
-          <iframe
-            style={{ pointerEvents: "none" }}
-            title="nowPlaying"
-            width="100%"
-            height="100%"
-            frameBorder="0"
-            src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG}${trailer}`}
-          ></iframe>
+        <Box
+          sx={{
+            width: "calc(100%)",
+            height: "100vh",
+          }}
+        >
+          <YoutubePlayer id={trailer} btSize="large" />
         </Box>
       ) : (
         <Box

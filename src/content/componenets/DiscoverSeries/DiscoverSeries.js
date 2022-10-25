@@ -2,7 +2,10 @@ import { Container, Toolbar } from "@mui/material";
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import {
-    DiscoverSeriesGenresApi, OnTheAirApi, PopularSeriesApi, TopRatedTvApi
+  DiscoverSeriesGenresApi,
+  OnTheAirApi,
+  PopularSeriesApi,
+  TopRatedTvApi,
 } from "../../../config/apis";
 import { MoviesContext } from "../../context/context";
 import useMoviesHook from "../../hooks/useMoviesHook";
@@ -16,7 +19,7 @@ export default function DiscoverSeries() {
   const [modes, setModes] = useState(arrayMode);
 
   useEffect(() => {
-    if (nowPlayingMovie?.id) getTrailer(nowPlayingMovie.id);
+    if (nowPlayingMovie?.id) getTrailer(nowPlayingMovie.id, "tv");
   }, [nowPlayingMovie, getTrailer]);
 
   useEffect(() => {
@@ -47,7 +50,7 @@ export default function DiscoverSeries() {
     >
       {/* <NowPlayingTrailer trailer={trailer} nowPlayingMovie={nowPlayingMovie} />
       <ControlButtons nowPlayingMovie={nowPlayingMovie} /> */}
-      <DiscoverContent modes={modes}  type="tv"/> 
+      <DiscoverContent modes={modes} type="tv" />
       <Routes>
         <Route path="watch/:id/:se-:ep/" element={<VideoPlayer />} />
         <Route path="watch/:id/" element={<VideoPlayer />} />

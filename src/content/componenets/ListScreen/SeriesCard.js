@@ -7,11 +7,12 @@ import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
 import { MoviesContext } from "../../context/context";
 import useTrailerHook from "../../hooks/useTrailerHook";
+import YoutubePlayer from "../YoutubePlayer/YoutubePlayer";
 export default function SeriesCard({ movie }) {
   const [hovred, sethovred] = useState(false);
   const { trailer, getTrailer } = useTrailerHook();
   useEffect(() => {
-    getTrailer(movie.id);
+    getTrailer(movie.id, "tv");
   }, [getTrailer, movie.id]);
 
   return (
@@ -99,14 +100,7 @@ const InfoLayer = ({ trailer, movie }) => {
       </Box>
       <Box sx={{ width: "calc(100%)", height: "40%" }}>
         {trailer ? (
-          <iframe
-            style={{ pointerEvents: "none" }}
-            title="serieframe"
-            width="100%"
-            frameBorder={0}
-            height="100%"
-            src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
-          ></iframe>
+          <YoutubePlayer id={trailer} />
         ) : (
           <img
             alt=""

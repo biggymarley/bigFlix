@@ -12,6 +12,7 @@ import { MoviesContext } from "../../context/context";
 import useMoviesHook from "../../hooks/useMoviesHook";
 import useTrailerHook from "../../hooks/useTrailerHook";
 import { CardsMap } from "../ListScreen/SearchListScreen";
+import YoutubePlayer from "../YoutubePlayer/YoutubePlayer";
 import SeriesEpisodes from "./SeriesEpisodes";
 
 const style = {
@@ -32,7 +33,8 @@ export default function InfoModal() {
   const { trailer, getTrailer } = useTrailerHook();
   const { filterSimilarMovies, movies, cleanMovies } = useMoviesHook();
   useEffect(() => {
-    if (InfosMovie?.id) getTrailer(InfosMovie?.id);
+    if (InfosMovie?.id)
+      getTrailer(InfosMovie?.id, InfosMovie?.first_air_date ? "tv" : "movie");
   }, [getTrailer, InfosMovie?.id]);
 
   useEffect(() => {
@@ -93,18 +95,13 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
           <Close sx={{ color: "primary.main" }} />
         </IconButton>
         {trailer ? (
-          <iframe
-            style={{
-              pointerEvents: "none",
-              position: "relative",
+          <YoutubePlayer
+            id={trailer}
+            btSize="medium"
+            frameStyle={{
               top: "-25%",
             }}
-            title="movieframe"
-            frameBorder={0}
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
-          ></iframe>
+          />
         ) : (
           <img
             alt=""
@@ -156,7 +153,7 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
                   color: "primary.main",
                   fontSize: "clamp(16px, 4vw, 2rem)",
                   whiteSpace: "nowrap",
-                  textShadow:"1px 1px 5px black"
+                  textShadow: "1px 1px 5px black",
                 }}
                 variant="h1"
               >

@@ -7,13 +7,14 @@ import bg from "../../../assets/imgs/bg.jpg";
 import { ImagesBaseUrl } from "../../../config/apis";
 import { MoviesContext } from "../../context/context";
 import useTrailerHook from "../../hooks/useTrailerHook";
+import YoutubePlayer from "../YoutubePlayer/YoutubePlayer";
 
 export default function MovieCard({ movie }) {
   const { trailer, getTrailer } = useTrailerHook();
   const [hovred, sethovred] = useState(false);
 
   useEffect(() => {
-    getTrailer(movie.id);
+    getTrailer(movie.id, "movie");
   }, [getTrailer, movie.id]);
 
   return (
@@ -100,14 +101,7 @@ const InfoLayer = ({ trailer, movie }) => {
       </Box>
       <Box sx={{ width: "calc(100%)", height: "40%" }}>
         {trailer ? (
-          <iframe
-          style={{ pointerEvents: "none" }}
-            title="movieframe"
-            frameBorder={0}
-            width="100%"
-            height="100%"
-            src={`https://www.youtube.com/embed/${trailer}?${process.env.REACT_APP_YOUTUBE_CONFIG_VOLUME}${trailer}`}
-          ></iframe>
+          <YoutubePlayer id={trailer} />
         ) : (
           <img
             alt=""

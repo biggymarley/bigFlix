@@ -21,7 +21,7 @@ export default function Discover() {
   const [modes, setModes] = useState(arrayMode);
 
   useEffect(() => {
-    if (nowPlayingMovie?.id) getTrailer(nowPlayingMovie.id);
+    if (nowPlayingMovie?.id) getTrailer(nowPlayingMovie.id, "movie");
   }, [nowPlayingMovie, getTrailer]);
 
   useEffect(() => {
@@ -57,7 +57,7 @@ export default function Discover() {
         <Route path="watch/:id/:se-:ep/" element={<VideoPlayer />} />
         <Route path="watch/:id/" element={<VideoPlayer />} />
       </Routes>
-      <Toolbar/>
+      <Toolbar />
     </Container>
   );
 }
