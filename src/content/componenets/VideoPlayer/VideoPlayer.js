@@ -8,7 +8,6 @@ export default function VideoPlayer() {
   const [isMove, setisMove] = useState(false);
   let { id, ep, se } = useParams();
   const { state } = useLocation();
-  console.log("state", state);
   const navigate = useNavigate();
   const ref = useRef({ current: null });
 
