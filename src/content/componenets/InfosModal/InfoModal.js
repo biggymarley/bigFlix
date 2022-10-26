@@ -44,7 +44,7 @@ export default function InfoModal() {
         InfosMovie?.first_air_date ? "tv" : "movie"
       );
     return () => cleanMovies();
-  }, [filterSimilarMovies, InfosMovie, cleanMovies]);
+  }, [filterSimilarMovies, InfosMovie]);
 
   return (
     <Modal
