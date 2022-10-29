@@ -2,12 +2,19 @@ import { ArrowBack, Fullscreen, FullscreenExit } from "@mui/icons-material";
 import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import OnPlayerInfo from "./OnPlayerInfo";
 export default function VideoPlayer() {
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
+  const [epSe, setEpSe] = useState({ ep: 1, se: 1 });
   let { id, ep, se } = useParams();
-  // const { state } = useLocation();
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    setEpSe({ ep, se });
+  }, [ep, se]);
+
   const navigate = useNavigate();
   const ref = useRef({ current: null });
   const goFull = () => {
@@ -114,9 +121,7 @@ export default function VideoPlayer() {
             mixBlendMode: "color",
             width: "100%",
             height: "51px",
-            backgroundSize: "contain",
             transition: "all .4s ease",
-            backgroundPosition: "center",
             left: "50%",
             opacity: 1,
             transform: "translate(-50%, 0%)",
@@ -124,6 +129,9 @@ export default function VideoPlayer() {
             ...(isMove && { top: "-50vh" }),
           }}
         />
+        {ep && se ? (
+          <OnPlayerInfo setEpSe={setEpSe} epSe={epSe} isMove={isMove} />
+        ) : null}
         <IconButton
           color="primary"
           sx={{
@@ -134,7 +142,9 @@ export default function VideoPlayer() {
             top: "-50vh",
             ...(isMove && { opacity: 1, top: 0 }),
           }}
-          onClick={() => navigate(-1)}
+          onClick={() =>
+            navigate(pathname.slice(0, pathname.lastIndexOf("/watch")))
+          }
         >
           <ArrowBack sx={{ fontSize: "4rem", color: "primary.light" }} />
         </IconButton>
@@ -168,7 +178,7 @@ export default function VideoPlayer() {
           }}
           src={
             se && ep
-              ? `${process.env.REACT_APP_MOVIES_URL_BASE}${id}/${se}-${ep}`
+              ? `${process.env.REACT_APP_MOVIES_URL_BASE}${id}/${epSe.se}-${epSe.ep}`
               : `${process.env.REACT_APP_MOVIES_URL_BASE}${id}`
           }
           width="100%"

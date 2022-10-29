@@ -1,8 +1,5 @@
 import { useCallback, useContext, useState } from "react";
-import {
-  NowPlayingMoviesApi,
-  PopularMoviesApi
-} from "../../config/apis";
+import { NowPlayingMoviesApi, PopularMoviesApi } from "../../config/apis";
 import { CheckMovieDB } from "../apisConnections/CheckMovieDB";
 import { GetMoviesList } from "../apisConnections/getMoviesList";
 import { getMoviesWithParams } from "../apisConnections/getMoviesWithParams";
@@ -34,19 +31,23 @@ export default function useMoviesHook() {
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
   const { dispatch } = useContext(StatusContext);
 
-  const cleanMovies = () => {
+  const cleanMovies = useCallback(() => {
     setMovies([]);
-  };
+  }, []);
 
-  const fetchEpisodes = useCallback(
-    async (serieId, season) => {
-      const fetchedMovies = await GetMoviesList("1", `tv/${serieId}/season/${season + 1}`);
-      if (fetchedMovies) {
-        setEpisodes([...fetchedMovies.episodes]);
-      }
-    },
-    []
-  );
+  const cleanMovieDetails = useCallback(() => {
+    setMovieDetailes({});
+  }, []);
+
+  const fetchEpisodes = useCallback(async (serieId, season) => {
+    const fetchedMovies = await GetMoviesList(
+      "1",
+      `tv/${serieId}/season/${season + 1}`
+    );
+    if (fetchedMovies) {
+      setEpisodes([...fetchedMovies.episodes]);
+    }
+  }, []);
 
   const fetchPopularMovies = useCallback(
     async (pageNumber) => {
@@ -105,26 +106,20 @@ export default function useMoviesHook() {
     [dispatch]
   );
 
-  const fetchLatestMovie = useCallback(
-    async (pageNumber) => {
-      // dispatch({ type: "showLoading", payload: true });
-      // const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
-      // dispatch({ type: "showLoading", payload: false });
-      // if (fetchedMovies) setLatestMovie([]);
-    },
-    []
-  );
+  const fetchLatestMovie = useCallback(async (pageNumber) => {
+    // dispatch({ type: "showLoading", payload: true });
+    // const fetchedMovies = await GetMoviesList(pageNumber, LatestMoviesApi);
+    // dispatch({ type: "showLoading", payload: false });
+    // if (fetchedMovies) setLatestMovie([]);
+  }, []);
 
-  const filterSimilarMovies = useCallback(
-    async (id, type) => {
-      const fetchedMovies = await GetMoviesList("1", `${type}/${id}/similar`);
-      if (fetchedMovies?.results) {
-        const fitred = await filterBadData(fetchedMovies?.results, type);
-        setMovies([...fitred]);
-      }
-    },
-    []
-  );
+  const filterSimilarMovies = useCallback(async (id, type) => {
+    const fetchedMovies = await GetMoviesList("1", `${type}/${id}/similar`);
+    if (fetchedMovies?.results) {
+      const fitred = await filterBadData(fetchedMovies?.results, type);
+      setMovies([...fitred]);
+    }
+  }, []);
 
   const fetchNowPlayingMovie = useCallback(
     async (pageNumber) => {
@@ -193,5 +188,6 @@ export default function useMoviesHook() {
     cleanMovies,
     GetMovieDetailes,
     fetchEpisodes,
+    cleanMovieDetails
   };
 }
