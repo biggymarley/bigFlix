@@ -39,7 +39,7 @@ export default function YoutubePlayer({ id, btSize, frameStyle }) {
       <IconButton
         onClick={HandleMute}
         sx={{
-          zIndex: 9998,
+          // zIndex: 9996,
           color: "primary.main",
           position: "absolute",
           right: "2rem",

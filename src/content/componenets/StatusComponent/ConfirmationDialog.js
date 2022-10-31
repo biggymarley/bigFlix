@@ -19,7 +19,7 @@ export const ConfirmationDialog = (props) => {
   const color =
     props.payload.type === "negative"
       ? theme.palette.error.main
-      : theme.palette.primary.main;
+      : theme.palette.secondary.main;
 
   useEffect(() => {
     setText(null);
@@ -37,6 +37,7 @@ export const ConfirmationDialog = (props) => {
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       maxWidth="xs"
+      PaperProps={{ sx: { bgcolor: "bg.main" } }}
     >
       <DialogTitle id="alert-dialog-title" sx={{ paddingTop: 0 }}>
         <Box sx={{ display: "flex", alignItems: "flex-end" }}>
@@ -91,19 +92,20 @@ export const ConfirmationDialog = (props) => {
               backgroundColor: "#F1F3F8",
               color: "#9EA4B3",
               marginRight: "12px",
+              fontFamily: "NBOLD"
             }}
             onClick={() => props.handleClose()}
             fullWidth
           >
-            Annuler
+            Cancel
           </Button>
           <Button
             autoFocus
             fullWidth
             disabled={!canSubmit}
             variant="contained"
-            color={props.payload.type === "negative" ? "error" : "primary"}
-            style={{ height: " 48px", width: "150px" }}
+            color={props.payload.type === "negative" ? "error" : "secondary"}
+            style={{ height: " 48px", width: "150px", fontFamily: "NBOLD" }}
             onClick={handleSubmit}
           >
             {props.payload.buttonLabel ?? "Valider"}
@@ -134,7 +136,7 @@ const classes = {
     borderRadius: "0 0 4px 4px",
   },
   body: {
-    color: "secondary.light",
+    color: "primary.light",
     fontFamily: "NRegular",
     fontSize: "16px",
     letterSpacing: "0",

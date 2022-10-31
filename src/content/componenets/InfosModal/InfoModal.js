@@ -1,5 +1,5 @@
 import { Close, PlayArrowRounded } from "@mui/icons-material";
-import { Button, IconButton } from "@mui/material";
+import { Button, IconButton, Toolbar } from "@mui/material";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import Typography from "@mui/material/Typography";
@@ -138,6 +138,8 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
             Similar {movie.first_air_date ? "Series" : "Movies"}:
           </Typography>
           <CardsMap movies={similarMovies} />
+        <Toolbar/>
+
         </Stack>
         <Stack
           direction={"column"}
@@ -212,6 +214,7 @@ const InfoLayer = ({ trailer, movie, similarMovies }) => {
             Similar {movie.first_air_date ? "Series" : "Movies"}:
           </Typography>
           <CardsMap movies={similarMovies} />
+          <Toolbar/>
         </Stack>
       </Box>
     </Stack>

@@ -16,14 +16,25 @@ import { useMatch, useNavigate } from "react-router-dom";
 import Logo from "../../../assets/imgs/bigflix.png";
 import { SearchContext } from "../../context/context";
 
+const pages = [
+  { label: "Home", path: "/" },
+  { label: "Movies", path: "/discover/movies" },
+  { label: "TV Shows", path: "/discover/series" },
+  { label: "Watch Later", path: "/watchLater" },
+];
+
 const pagesS = [
   { label: "Home", path: "/" },
   { label: "TV Shows", path: "/discover/series" },
+  { label: "Watch Later", path: "/watchLater" },
+
 ];
 
 const pagesM = [
   { label: "Home", path: "/" },
   { label: "Movies", path: "/discover/movies" },
+  { label: "Watch Later", path: "/watchLater" },
+
 ];
 
 const NetHeader = () => {
@@ -85,7 +96,7 @@ const NetHeader = () => {
               alignItems="center"
               direction="row"
             >
-              {(match ? pagesS : pagesM).map((page) => (
+              {(match ? pagesS : matchS ? pagesM : pages).map((page) => (
                 <Button
                   key={page.label}
                   onClick={() => {
@@ -172,7 +183,6 @@ const NetHeader = () => {
                   sx={{
                     flexGrow: { xs: 1, md: 0 },
                     display: { xs: "block", sm: "none" },
-       
                   }}
                 >
                   <Box onClick={() => navigate("/")} sx={{ px: 5, my: 2 }}>
@@ -188,7 +198,7 @@ const NetHeader = () => {
                   </Box>
                   <Divider sx={{ bgcolor: "black.light" }} />
                 </Box>
-                {(match ? pagesS : pagesM).map((page) => (
+                {(match ? pagesS : matchS ? pagesM : pages).map((page) => (
                   <MenuItem
                     key={page.label}
                     onClick={() => {

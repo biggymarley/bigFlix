@@ -1,8 +1,21 @@
-import { ArrowBack, Fullscreen, FullscreenExit } from "@mui/icons-material";
+import {
+  ArrowBack,
+  Bookmark,
+  Fullscreen,
+  FullscreenExit,
+} from "@mui/icons-material";
 import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import { StatusContext } from "../../context/context";
 import OnPlayerInfo from "./OnPlayerInfo";
 export default function VideoPlayer() {
   const [isFull, setisFull] = useState(false);
@@ -10,7 +23,8 @@ export default function VideoPlayer() {
   const [epSe, setEpSe] = useState({ ep: 1, se: 1 });
   let { id, ep, se } = useParams();
   const { pathname } = useLocation();
-
+  const { dispatch } = useContext(StatusContext);
+  const [cookies, setCookies] = useCookies(["watch-later"]);
   useEffect(() => {
     setEpSe({ ep, se });
   }, [ep, se]);
@@ -36,8 +50,7 @@ export default function VideoPlayer() {
         setisFull(false);
       })
       .catch(function (error) {
-        setisFull(true);
-        console.log(error.message);
+        // setisFull(true);
       });
   };
 
@@ -98,6 +111,39 @@ export default function VideoPlayer() {
       });
   }, [mouseMoveEffect]);
 
+  const HandleSave = () => {
+    exitFull();
+    dispatch({
+      type: "showDialog",
+      payload: {
+        title: "Watch Later ?",
+        message: "You can save this Movie to watch it later",
+        // field: false, // text field
+        callback: () => checkCokkies(),
+        type: "positive", // positive | negative
+        buttonLabel: "OK",
+      },
+    });
+  };
+
+  const checkCokkies = () => {
+    if (cookies["watch-later"]?.filter((c) => c.id === id).length > 0) return;
+    else {
+      if (ep && se)
+        setCookies(
+          "watch-later",
+          [...(cookies["watch-later"] ?? []), { id, ep, se, type: "serie" }],
+          { path: "/" }
+        );
+      else
+        setCookies(
+          "watch-later",
+          [...(cookies["watch-later"] ?? []), { id, type: "movie" }],
+          { path: "/" }
+        );
+    }
+  };
+
   return (
     <Modal open={true} keepMounted>
       <Container
@@ -112,26 +158,29 @@ export default function VideoPlayer() {
           left: "50%",
           transform: "translate(-50%, -50%)",
           bgcolor: "black.main",
+          zIndex: 9999,
         }}
       >
         <Box
           sx={{
             position: "absolute",
             top: 0,
-            mixBlendMode: "color",
+            bgcolor:"black.main",
+            // mixBlendMode: "color",
             width: "100%",
             height: "51px",
             transition: "all .4s ease",
             left: "50%",
             opacity: 1,
             transform: "translate(-50%, 0%)",
-            backdropFilter: "blur(1000px)",
+            // backdropFilter: "blur(1000px)",
             ...(isMove && { top: "-50vh" }),
           }}
         />
         {ep && se ? (
           <OnPlayerInfo setEpSe={setEpSe} epSe={epSe} isMove={isMove} />
         ) : null}
+        <SaveMovie isMove={isMove} HandleSave={HandleSave} />
         <IconButton
           color="primary"
           sx={{
@@ -142,11 +191,12 @@ export default function VideoPlayer() {
             top: "-50vh",
             ...(isMove && { opacity: 1, top: 0 }),
           }}
-          onClick={() =>
-            navigate(pathname.slice(0, pathname.lastIndexOf("/watch")))
-          }
+          onClick={() => {
+            HandleSave();
+            navigate(pathname.slice(0, pathname.lastIndexOf("/watch")));
+          }}
         >
-          <ArrowBack sx={{ fontSize: "4rem", color: "primary.light" }} />
+          <ArrowBack sx={{ fontSize: "2.5rem", color: "primary.light" }} />
         </IconButton>
         <IconButton
           color="primary"
@@ -162,9 +212,11 @@ export default function VideoPlayer() {
           onClick={isFull ? exitFull : goFull}
         >
           {isFull ? (
-            <FullscreenExit sx={{ fontSize: "4rem", color: "primary.light" }} />
+            <FullscreenExit
+              sx={{ fontSize: "2.5rem", color: "primary.light" }}
+            />
           ) : (
-            <Fullscreen sx={{ fontSize: "4rem", color: "primary.light" }} />
+            <Fullscreen sx={{ fontSize: "2.5rem", color: "primary.light" }} />
           )}
         </IconButton>
         <iframe
@@ -188,3 +240,23 @@ export default function VideoPlayer() {
     </Modal>
   );
 }
+
+const SaveMovie = ({ isMove, HandleSave }) => {
+  return (
+    <IconButton
+      onClick={HandleSave}
+      sx={{
+        position: "absolute",
+        zIndex: 1999,
+        transition: "all .4s ease",
+        opacity: 0,
+        top: "-50vh",
+        right: 0,
+        color: "primary.main",
+        ...(isMove && { opacity: 1, top: "3rem" }),
+      }}
+    >
+      <Bookmark sx={{ fontSize: "2.5rem", color: "primary.light" }} />
+    </IconButton>
+  );
+};
