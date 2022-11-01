@@ -14,7 +14,7 @@ import DiscoverContent from "../DiscoverMovies/DiscoverContent";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 export default function DiscoverSeries() {
   const { nowPlayingMovie, fetchNowPlayingMovie } = useMoviesHook();
-  const { trailer, getTrailer } = useTrailerHook();
+  const {  getTrailer } = useTrailerHook();
   const { seriesGenres } = useContext(MoviesContext);
   const [modes, setModes] = useState(arrayMode);
 

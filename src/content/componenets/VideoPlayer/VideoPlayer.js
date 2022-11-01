@@ -2,19 +2,18 @@ import {
   ArrowBack,
   Bookmark,
   Fullscreen,
-  FullscreenExit,
+  FullscreenExit
 } from "@mui/icons-material";
 import { Box, IconButton, Modal } from "@mui/material";
 import { Container } from "@mui/system";
 import React, {
-  useCallback,
   useContext,
   useEffect,
   useRef,
-  useState,
+  useState
 } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { StatusContext } from "../../context/context";
 import OnPlayerInfo from "./OnPlayerInfo";
 export default function VideoPlayer() {
@@ -90,11 +89,7 @@ export default function VideoPlayer() {
   const myListener = function () {
     setisMove(false);
   };
-  const mouseMoveEffect = useCallback((timeout) => {
-    clearTimeout(timeout);
-    timeout = setTimeout(myListener, 6000);
-    setisMove(true);
-  }, []);
+  
 
   useEffect(() => {
     let timeout;
@@ -109,7 +104,7 @@ export default function VideoPlayer() {
         timeout = setTimeout(myListener, 6000);
         setisMove(true);
       });
-  }, [mouseMoveEffect]);
+  }, []);
 
   const HandleSave = () => {
     exitFull();
@@ -165,7 +160,7 @@ export default function VideoPlayer() {
           sx={{
             position: "absolute",
             top: 0,
-            bgcolor:"black.main",
+            bgcolor: "black.main",
             // mixBlendMode: "color",
             width: "100%",
             height: "51px",
@@ -247,7 +242,7 @@ const SaveMovie = ({ isMove, HandleSave }) => {
       onClick={HandleSave}
       sx={{
         position: "absolute",
-        zIndex: 1999,
+        zIndex: 2999,
         transition: "all .4s ease",
         opacity: 0,
         top: "-50vh",

@@ -19,6 +19,7 @@ body {
   margin: 0;
   font-family: "NRegular";
   background-color: #141414;
+  user-select: none;
 }
 #top_buttons {
   opacity: 0 !important;
