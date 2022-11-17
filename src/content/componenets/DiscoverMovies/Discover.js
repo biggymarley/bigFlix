@@ -46,7 +46,7 @@ export default function Discover() {
   }, [moviesGenres]);
   return (
     <Container
-      maxWidth="xl"
+      maxWidth="100%"
       disableGutters
       sx={{ height: "100vh", position: "relative" }}
     >

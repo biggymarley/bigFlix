@@ -187,7 +187,7 @@ export default function VideoPlayer() {
             ...(isMove && { opacity: 1, top: 0 }),
           }}
           onClick={() => {
-            HandleSave();
+            // HandleSave();
             navigate(pathname.slice(0, pathname.lastIndexOf("/watch")));
           }}
         >

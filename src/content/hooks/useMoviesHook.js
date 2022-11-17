@@ -82,10 +82,11 @@ export default function useMoviesHook() {
         "1",
         media_type === "movie" ? `movie/${id}` : `tv/${id}`
       );
+      dispatch({ type: "showLoading", payload: false });
       if (fetchedMovies) {
         setMovieDetailes({ ...fetchedMovies });
+        return(fetchedMovies)
       }
-      dispatch({ type: "showLoading", payload: false });
     },
     [dispatch]
   );

@@ -21,7 +21,7 @@ export default function SearchListScreen() {
   }, [query, SearchAll]);
 
   return (
-    <Container maxWidth="xl">
+    <Container maxWidth="100%">
       <Toolbar />
       {movies.length > 0 ? <CardsMap movies={movies} /> : <Nodatafound />}
 

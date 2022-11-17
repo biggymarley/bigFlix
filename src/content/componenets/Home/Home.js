@@ -39,7 +39,7 @@ export default function Home() {
   };
 
   return (
-    <Container maxWidth={"xl"} sx={classes.root}>
+    <Container maxWidth={"100%"} sx={classes.root}>
       <Toolbar>
         <Stack direction={"row"} py={4} px={2}>
           <img src={Logo} alt="" style={{ objectFit: "contain", width: 120 }} />
