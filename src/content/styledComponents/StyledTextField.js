@@ -2,9 +2,9 @@ import styled from "@emotion/styled";
 import { TextField } from "@mui/material";
 
 export const StyledTextField = styled(TextField)(({ theme }) => ({
-  width: "clamp(200px, 40vw,600px)",
+  width: "clamp(200px, 60vw,600px)",
   backgroundColor: "#fff",
-  padding: "4px",
+  // padding: "4px",
   transition: "all .2s ease",
   "& label": {
     fontFamily: "NRegular",

@@ -1,10 +1,21 @@
-import { Button, Container, Stack, Toolbar, Typography } from "@mui/material";
+import { Movie, TvRounded } from "@mui/icons-material";
+import {
+  Button,
+  Container,
+  IconButton,
+  Stack,
+  Toolbar,
+  Typography,
+} from "@mui/material";
+import { styled } from "@mui/system";
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import bg from "../../../assets/imgs/bg.jpg";
 import Logo from "../../../assets/imgs/bigflix.png";
 import { SearchContext, StatusContext } from "../../context/context";
 import { StyledTextField } from "../../styledComponents/StyledTextField";
+
+ const Img = styled('img')({});
 
 export default function Home() {
   const { dispatch } = useContext(StatusContext);
@@ -40,9 +51,33 @@ export default function Home() {
 
   return (
     <Container maxWidth={"100%"} sx={classes.root}>
-      <Toolbar>
-        <Stack direction={"row"} py={4} px={2}>
-          <img src={Logo} alt="" style={{ objectFit: "contain", width: 120 }} />
+      <Toolbar disableGutters>
+        <Stack
+          direction={"row"}
+          py={4}
+          px={2}
+          justifyContent="space-between"
+          sx={{ width: "100%" }}
+        >
+          <Img src={Logo} alt="" sx={{ objectFit: "contain", width: { xs: 80, sm: 120 } }} />
+          <Stack direction={"row"} spacing={{xs:.5, sm: 2}}>
+            <IconButton color="secondary" onClick={discover}>
+              <Movie
+                sx={{
+                  width: { xs: "1.5rem", sm: "2rem" },
+                  height: { xs: "1.5rem", sm: "2rem" },
+                }}
+              />
+            </IconButton>
+            <IconButton color="secondary" onClick={discoverSeries}>
+              <TvRounded
+                sx={{
+                  width: { xs: "1.5rem", sm: "2rem" },
+                  height: { xs: "1.5rem", sm: "2rem" },
+                }}
+              />
+            </IconButton>
+          </Stack>
         </Stack>
       </Toolbar>
       <Stack
@@ -71,9 +106,12 @@ export default function Home() {
           direction={{ xs: "column", md: "row" }}
           mt="16px"
           spacing={{ xs: 2, md: 0 }}
+          sx={{ width: "100%" }}
+          justifyContent="center"
+          alignItems={{ xs: "center", md: "normal" }}
         >
           <StyledTextField
-            label="Search"
+            placeholder="Search"
             variant="standard"
             onChange={HandleSearchChange}
             onKeyDown={EnterListner}
@@ -94,7 +132,7 @@ export default function Home() {
           </Typography>
         )}
 
-        <Button
+        {/* <Button
           color="secondary"
           variant="outlined"
           onClick={discover}
@@ -109,7 +147,7 @@ export default function Home() {
           sx={{ ...classes.button, mt: 5 }}
         >
           Discover Series
-        </Button>
+        </Button> */}
       </Stack>
     </Container>
   );
