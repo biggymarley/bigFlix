@@ -2,21 +2,17 @@ import {
   ArrowBack,
   Bookmark,
   Fullscreen,
-  FullscreenExit
+  FullscreenExit,
 } from "@mui/icons-material";
-import { Box, IconButton, Modal } from "@mui/material";
+import { Box, IconButton, Modal, Paper } from "@mui/material";
 import { Container } from "@mui/system";
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState
-} from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { StatusContext } from "../../context/context";
 import OnPlayerInfo from "./OnPlayerInfo";
 export default function VideoPlayer() {
+  const [isValid, setisValid] = useState(false);
   const [isFull, setisFull] = useState(false);
   const [isMove, setisMove] = useState(false);
   const [epSe, setEpSe] = useState({ ep: 1, se: 1 });
@@ -89,7 +85,6 @@ export default function VideoPlayer() {
   const myListener = function () {
     setisMove(false);
   };
-  
 
   useEffect(() => {
     let timeout;
@@ -138,6 +133,29 @@ export default function VideoPlayer() {
         );
     }
   };
+
+  const iframeRef = useRef(null);
+  useEffect(() => {
+    const handleIframeError = () => {
+      setisValid(false);
+    };
+
+    const handleIframeLoad = () => {
+      setisValid(true);
+    };
+
+    if (iframeRef.current) {
+      iframeRef.current.addEventListener("error", handleIframeError);
+      iframeRef.current.addEventListener("load", handleIframeLoad);
+    }
+
+    return () => {
+      if (iframeRef.current) {
+        iframeRef.current.removeEventListener("error", handleIframeError);
+        iframeRef.current.removeEventListener("load", handleIframeLoad);
+      }
+    };
+  }, []);
 
   return (
     <Modal open={true} keepMounted>
@@ -214,23 +232,30 @@ export default function VideoPlayer() {
             <Fullscreen sx={{ fontSize: "2.5rem", color: "primary.light" }} />
           )}
         </IconButton>
-        <iframe
-          frameBorder="0"
-          allowFullScreen={true}
-          id="iframe"
-          title="frame"
-          style={{
-            pointerEvents: "none",
-            ...(isMove && { pointerEvents: "all" }),
-          }}
-          src={
-            se && ep
-              ? `${process.env.REACT_APP_MOVIES_URL_BASE}${id}/${epSe.se}-${epSe.ep}`
-              : `${process.env.REACT_APP_MOVIES_URL_BASE}${id}`
-          }
-          width="100%"
-          height="100%"
-        ></iframe>
+        {/* {!isValid ? (
+          <Box>
+            <Paper>Helllloqsdqdqsdqsdqsd</Paper>
+          </Box>
+        ) : ( */}
+          <iframe
+          frameBorder={0}
+            ref={iframeRef}
+            allowFullScreen={true}
+            id="iframe"
+            title="frame"
+            style={{
+              pointerEvents: "none",
+              ...(isMove && { pointerEvents: "all" }),
+            }}
+            src={
+              se && ep
+                ? `${process.env.REACT_APP_MOVIES_URL_BASE}${id}/${epSe.se}-${epSe.ep}`
+                : `${process.env.REACT_APP_MOVIES_URL_BASE}${id}`
+            }
+            width="100%"
+            height="100%"
+          ></iframe>
+        {/* )} */}
       </Container>
     </Modal>
   );

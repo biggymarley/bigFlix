@@ -7,20 +7,21 @@ import { multiSearch } from "../apisConnections/multiSearch";
 import { StatusContext } from "../context/context";
 
 const filterBadData = async (array, type) => {
-  try {
-    let filtred = [];
-    for (let ar in array) {
-      const res = await CheckMovieDB(
-        array[ar].id,
-        type ?? array[ar].media_type
-      );
-      if (res !== null || array[ar].media_type === "person")
-        filtred = [...filtred, array[ar]];
-    }
-    return filtred;
-  } catch (error) {
-    return [];
-  }
+  // try {
+  //   let filtred = [];
+  //   for (let ar in array) {
+  //     const res = await CheckMovieDB(
+  //       array[ar].id,
+  //       type ?? array[ar].media_type
+  //     );
+  //     if (res !== null || array[ar].media_type === "person")
+  //       filtred = [...filtred, array[ar]];
+  //   }
+  //   return filtred;
+  // } catch (error) {
+  //   return [];
+  // }
+  return array
 };
 
 export default function useMoviesHook() {
