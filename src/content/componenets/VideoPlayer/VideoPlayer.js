@@ -174,7 +174,7 @@ export default function VideoPlayer() {
           zIndex: 9999,
         }}
       >
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
             top: 0,
@@ -189,7 +189,7 @@ export default function VideoPlayer() {
             // backdropFilter: "blur(1000px)",
             ...(isMove && { top: "-50vh" }),
           }}
-        />
+        /> */}
         {ep && se ? (
           <OnPlayerInfo setEpSe={setEpSe} epSe={epSe} isMove={isMove} />
         ) : null}
