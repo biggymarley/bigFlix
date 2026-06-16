@@ -1,0 +1,4 @@
+{
+  "framework": "create-react-app",
+  "outputDirectory": "build"
+}
