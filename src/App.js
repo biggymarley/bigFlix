@@ -1,8 +1,8 @@
 import React from "react";
-import Bigflix from "./content/Bigflix";
+import UpdateRedirect from "./content/componenets/UpdateRedirect/UpdateRedirect";
 
 function App() {
-  return <Bigflix />;
+  return <UpdateRedirect />;
 }
 
 export default App;
